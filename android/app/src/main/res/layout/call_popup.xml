@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_blue_dark">
+
+    <TextView
+        android:id="@+id/popup_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Incoming call..."
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+</LinearLayout>
