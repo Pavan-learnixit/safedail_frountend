@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
 
 import '../utilities/colors.dart';
 import '../widgets/custom_button.dart';
@@ -62,16 +63,19 @@ class _InitialPageState extends State<InitialPage> {
                     ),
                   ],
                 ),
-
-
                 const Placeholder(fallbackHeight: 400,fallbackWidth: 10,),
                 const SizedBox(height: 50,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.language,color: Colors.blue.shade900,size: 30,),
-                    Text(AppLocalizations.of(context)!.changeLanguage,style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.blue.shade900,fontWeight: FontWeight.normal),),
-                  ],
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>LanguageScreen()));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.language,color: Colors.blue.shade900,size: 30,),
+                      Text(AppLocalizations.of(context)!.changeLanguage,style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.blue.shade900,fontWeight: FontWeight.normal),),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 30,),
 

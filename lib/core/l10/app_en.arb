@@ -6,5 +6,7 @@
   "knowText":"Know who is calling before you answer",
   "changeLanguage":"Change Language",
   "getStarted":"Get Started",
-  "privacyText":"By tapping 'Get Started',you accept our Terms of service and privacy policy.Tap here for summary of how we process your data."
+  "privacyText":"By tapping 'Get Started',you accept our Terms of service and privacy policy.Tap here for summary of how we process your data.",
+  "welcomeText":"Welcome to SafeDial",
+  "pickYourLang":"Pick your Language to get Started"
 }
