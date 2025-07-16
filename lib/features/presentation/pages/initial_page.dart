@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
+import 'package:truecaller_clone/features/presentation/widgets/custom_bottom_navigation.dart';
+import 'package:truecaller_clone/platform_channel.dart';
 
 import '../utilities/colors.dart';
 import '../widgets/custom_button.dart';
@@ -63,7 +69,7 @@ class _InitialPageState extends State<InitialPage> {
                     ),
                   ],
                 ),
-                const Placeholder(fallbackHeight: 400,fallbackWidth: 10,),
+                const Placeholder(fallbackHeight: 200,fallbackWidth: 10,),
                 const SizedBox(height: 50,),
                 GestureDetector(
                   onTap: (){
@@ -80,9 +86,14 @@ class _InitialPageState extends State<InitialPage> {
                 const SizedBox(height: 30,),
 
                 customButton(
-                    onPressed: () {
-                      //MyApp.setLocale(context, const Locale('en'));
-                      // handle login
+                    onPressed: ()  async {
+                      await _requestPermissions();
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        CallPlatformChannel.startCallService();
+                        CallPlatformChannel.requestDialerRole();
+                      });
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>CustomBottomNaviaionBarScreen()), (Route<dynamic> route)=> false );
+                      // Navigator.push(context, MaterialPageRoute(builder: (_)=>CustomBottomNaviaionBarScreen()));
                     },
                     label: AppLocalizations.of(context)!.getStarted,
                     width: MediaQuery.sizeOf(context).width,
@@ -107,5 +118,22 @@ class _InitialPageState extends State<InitialPage> {
       ),
 
     );
+  }
+
+  Future<void> _requestPermissions() async {
+    final statuses = await [
+      Permission.phone,
+      Permission.contacts,
+
+      Permission.systemAlertWindow,
+      Permission.notification,
+      if (Platform.isAndroid && await DeviceInfoPlugin().androidInfo.then((info) => info.version.sdkInt >= 34))
+        Permission.ignoreBatteryOptimizations,
+    ].request();
+
+
+    if (statuses.values.any((status) => status.isPermanentlyDenied)) {
+      await openAppSettings();
+    }
   }
 }

@@ -7,6 +7,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:truecaller_clone/features/presentation/pages/initial_page.dart';
+import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
 import 'platform_channel.dart';
 
 void main() async {
@@ -20,12 +21,12 @@ Future<void> _requestPermissions() async {
   // final androidInfo = await deviceInfo.androidInfo;
   // final isAndroid15OrNewer = androidInfo.version.sdkInt >= 34;
   final statuses = await [
-    Permission.phone,
-    Permission.contacts,
-    // Permission.,
+    // Permission.phone,
+    // Permission.contacts,
+
     Permission.systemAlertWindow,
-    Permission.notification,
-  // await Permission.notification.request();
+    // Permission.notification,
+
     if (Platform.isAndroid && await DeviceInfoPlugin().androidInfo.then((info) => info.version.sdkInt >= 34))
       Permission.ignoreBatteryOptimizations,
   ].request();
@@ -59,15 +60,15 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // Start services when app launches
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      CallPlatformChannel.startCallService();
-      CallPlatformChannel.requestDialerRole();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   CallPlatformChannel.startCallService();
+    //   CallPlatformChannel.requestDialerRole();
+    // });
 
     return MaterialApp(
       title: 'Truecaller Clone',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: InitialPage(),
+      home: LanguageScreen(),
        locale: _locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -75,37 +76,3 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Truecaller Clone")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Call detection is active"),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                await _requestPermissions();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Permissions refreshed")),
-                );
-              },
-              child: const Text("Check Permissions Again"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

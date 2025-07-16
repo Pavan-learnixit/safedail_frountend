@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:truecaller_clone/features/presentation/pages/initial_page.dart';
 
 import '../../../main.dart';
 
@@ -75,13 +76,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   }).toList(),
                 ),
               ),
-
-
-
-
-
-
-
             ],
           ),
         ),
@@ -92,6 +86,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     return InkWell(
       onTap: () {
         MyApp.setLocale(context, Locale(code));
+        Navigator.push(context, MaterialPageRoute(builder: (_)=>InitialPage()));
       },
       child: Container(
         padding: const EdgeInsets.all(12),
