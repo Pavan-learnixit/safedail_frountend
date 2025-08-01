@@ -47,7 +47,6 @@
 //                );
 //    }
 //}
-
 package com.example.truecaller_clone;
 
 import io.flutter.embedding.android.FlutterActivity;
@@ -57,6 +56,12 @@ import android.content.Intent;
 import android.app.role.RoleManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "call_detection_channel";
@@ -89,7 +94,33 @@ public class MainActivity extends FlutterActivity {
                                 } else {
                                     result.error("UNSUPPORTED_VERSION", "RoleManager requires Android 10+", null);
                                 }
-                            } else {
+                            }else if (call.method.equals("getSmsMessages")) {
+                                JSONArray smsList = new JSONArray();
+                                ContentResolver cr = getContentResolver();
+                                Cursor cursor = cr.query(Uri.parse("content://sms/inbox"), null, null, null, "date DESC");
+
+                                if (cursor != null) {
+                                    try {
+                                        while (cursor.moveToNext()) {
+                                            JSONObject sms = new JSONObject();
+                                            sms.put("address", cursor.getString(cursor.getColumnIndexOrThrow("address")));
+                                            sms.put("body", cursor.getString(cursor.getColumnIndexOrThrow("body")));
+                                            sms.put("date", cursor.getString(cursor.getColumnIndexOrThrow("date")));
+                                            smsList.put(sms);
+                                        }
+                                    } catch (Exception e) {
+                                        result.error("ERROR", "Failed to read SMS: " + e.getMessage(), null);
+                                        return;
+                                    } finally {
+                                        cursor.close();
+                                    }
+
+                                    result.success(smsList.toString()); // Return JSON string to Dart
+                                } else {
+                                    result.error("ERROR", "Cursor is null", null);
+                                }
+                            }
+                            else {
                                 result.notImplemented();
                             }
                         }

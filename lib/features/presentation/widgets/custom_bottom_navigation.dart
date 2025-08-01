@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:truecaller_clone/features/presentation/pages/calls_screen.dart';
 
+import '../pages/message_screen.dart';
+
 class CustomBottomNaviaionBarScreen extends StatefulWidget {
   @override
   _BottomNavScreenState createState() => _BottomNavScreenState();
@@ -14,7 +16,7 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
   final List<Widget> _screens = [
     const CallsScreen(),
     // Container(),
-    Container(),
+    MessagesScreen(),
     Container(),
     Container(),
     Container(),
