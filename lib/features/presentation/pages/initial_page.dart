@@ -11,6 +11,8 @@ import 'package:truecaller_clone/platform_channel.dart';
 
 import '../utilities/colors.dart';
 import '../widgets/custom_button.dart';
+import '../widgets/permission_popup.dart';
+import 'backup_screen.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -92,8 +94,7 @@ class _InitialPageState extends State<InitialPage> {
                         CallPlatformChannel.startCallService();
                         CallPlatformChannel.requestDialerRole();
                       });
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>CustomBottomNaviaionBarScreen()), (Route<dynamic> route)=> false );
-                      // Navigator.push(context, MaterialPageRoute(builder: (_)=>CustomBottomNaviaionBarScreen()));
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>PermissionPopupStep1()), (Route<dynamic> route)=> false );
                     },
                     label: AppLocalizations.of(context)!.getStarted,
                     width: MediaQuery.sizeOf(context).width,
