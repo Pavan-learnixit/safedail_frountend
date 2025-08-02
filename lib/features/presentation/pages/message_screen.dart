@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:truecaller_clone/sms_service.dart';
+import 'package:intl/intl.dart';
+
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({super.key});
@@ -34,20 +36,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
     try {
       final messages = await SmsService.getSmsMessages();
       setState(() {
-        smsMessages = [
-          {
-            "address": "Airtel",
-            "body": "Your recharge was successful."
-          },
-          {
-            "address": "HDFC",
-            "body": "₹500 debited from your account."
-          },
-          {
-            "address": "Flipkart",
-            "body": "Your order is out for delivery!"
-          }
-        ];
+        smsMessages = messages;
+
         isLoading = false;
       });
     } catch (e) {
@@ -57,6 +47,17 @@ class _MessagesScreenState extends State<MessagesScreen> {
       });
     }
   }
+  String _formatSmsDate(String? timestampStr) {
+    if (timestampStr == null) return 'Unknown date';
+    try {
+      final timestamp = int.parse(timestampStr);
+      final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+      return DateFormat('dd MMM yyyy, hh:mm a').format(dateTime);
+    } catch (e) {
+      return 'Invalid date';
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +85,22 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 ),
               ),
               title: Text(sender, style: const TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(
-                message,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    message,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    _formatSmsDate(sms['date']),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
               ),
+
             ),
           );
         },
