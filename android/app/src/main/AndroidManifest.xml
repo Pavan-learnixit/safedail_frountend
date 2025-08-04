@@ -34,7 +34,7 @@
     </queries>
 
     <application
-        android:label="truecaller_clone"
+        android:label="SafeDial"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
