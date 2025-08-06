@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:truecaller_clone/features/presentation/pages/calls_screen.dart';
+import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
 
 import '../pages/message_screen.dart';
 
@@ -18,7 +19,7 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
     // Container(),
     MessagesScreen(),
     Container(),
-    Container(),
+    premiumscreen(),
     Container(),
   ];
 
