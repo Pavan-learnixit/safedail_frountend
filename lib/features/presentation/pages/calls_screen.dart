@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:truecaller_clone/features/presentation/pages/profile_page.dart';
 import 'package:truecaller_clone/features/presentation/widgets/call_widget.dart';
 import 'package:truecaller_clone/features/presentation/widgets/search_bar.dart';
 
@@ -19,71 +20,75 @@ class _CallsScreenState extends State<CallsScreen> {
       body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-                    children: [
-                       buildSearchBar(controller: searchController, suffixOnPressed: () {  }, prefixOnPressed: () {  }, onSubmitted: (value) {  },height: 60),
-                      const SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _buttons(icon: Icons.contact_phone, text: "Contacts"),
-                          _buttons(icon: Icons.favorite, text: "Favorites"),
-                          _buttons(icon: Icons.whatshot, text: "Voice HD"),
-                        ],
-                      ),
-                      const SizedBox(height: 20,),
-                      if(isEnabled)
-                        customCard(),
-                      if(isEnabled)
+            child: SingleChildScrollView(
+              child: Column(
+                      children: [
+                         buildSearchBar(controller: searchController, suffixOnPressed: () {  }, prefixOnPressed: () {
+                           Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
+                         }, onSubmitted: (value) {  },height: 60),
                         const SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          mostCalledWidgets(name: 'Prajwal',char: 'P',label: "7h"),
-                          mostCalledWidgets(name: 'Manoj',char: 'M',label: "7h"),
-                          mostCalledWidgets(name: 'Raju',char: 'R',label: "7h"),
-                          mostCalledWidgets(name: 'Mayank',char: 'M',label: "7h"),
-                        ],
-                      ),
-                      SizedBox(height: 20,),
-
-                      CallWidget(
-                        char: "P",
-                        label: "3 min",
-                        name: "Prekshi",
-                        time: "8:21 PM",
-                        onCallPressed: () {
-
-                        },
-                      ) ,
-                      SizedBox(height: 20,),
-
-                      CallWidget(
-                        char: "M",
-                        label: "3 min",
-                        name: "Manoj",
-                        time: "10:21 PM",
-                        onCallPressed: () {
-
-                        },
-                      ),
-                      SizedBox(height: 20,),
-
-                      CallWidget(
-                        char: "R",
-                        label: "7 min",
-                        name: "Spam call",
-                        time: "10:27 PM",
-                        onCallPressed: () {
-
-                        },
-                        isFraud: true,
-                      ) ,
-
-
-
-                    ],
-                  ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _buttons(icon: Icons.contact_phone, text: "Contacts"),
+                            _buttons(icon: Icons.favorite, text: "Favorites"),
+                            _buttons(icon: Icons.whatshot, text: "Voice HD"),
+                          ],
+                        ),
+                        const SizedBox(height: 20,),
+                        if(isEnabled)
+                          customCard(),
+                        if(isEnabled)
+                          const SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            mostCalledWidgets(name: 'Prajwal',char: 'P',label: "7h"),
+                            mostCalledWidgets(name: 'Manoj',char: 'M',label: "7h"),
+                            mostCalledWidgets(name: 'Raju',char: 'R',label: "7h"),
+                            mostCalledWidgets(name: 'Mayank',char: 'M',label: "7h"),
+                          ],
+                        ),
+                        SizedBox(height: 20,),
+              
+                        CallWidget(
+                          char: "P",
+                          label: "3 min",
+                          name: "Prekshi",
+                          time: "8:21 PM",
+                          onCallPressed: () {
+              
+                          },
+                        ) ,
+                        SizedBox(height: 20,),
+              
+                        CallWidget(
+                          char: "M",
+                          label: "3 min",
+                          name: "Manoj",
+                          time: "10:21 PM",
+                          onCallPressed: () {
+              
+                          },
+                        ),
+                        SizedBox(height: 20,),
+              
+                        CallWidget(
+                          char: "R",
+                          label: "7 min",
+                          name: "Spam call",
+                          time: "10:27 PM",
+                          onCallPressed: () {
+              
+                          },
+                          isFraud: true,
+                        ) ,
+              
+              
+              
+                      ],
+                    ),
+            ),
           )),
     );
   }
@@ -113,13 +118,13 @@ class _CallsScreenState extends State<CallsScreen> {
   }
   Widget customCard(){
     return Container(
-        height: MediaQuery.sizeOf(context).height*0.2,
+        height: MediaQuery.sizeOf(context).height*0.23,
         width: MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         child:  Padding(
-          padding:  const EdgeInsets.all(30.0),
+          padding:  const EdgeInsets.all(8.0),
           child:  Row(
             children: [
               Expanded(
@@ -144,7 +149,7 @@ class _CallsScreenState extends State<CallsScreen> {
                 ),
               ),
               SizedBox(width: 20,),
-              SizedBox(
+              const SizedBox(
                   height:70,
                   width:50,child: const Placeholder()),
             ],
