@@ -3,7 +3,7 @@ import 'package:truecaller_clone/features/presentation/pages/profile_page.dart';
 import 'package:truecaller_clone/features/presentation/widgets/call_widget.dart';
 import 'package:truecaller_clone/features/presentation/widgets/search_bar.dart';
 
-import 'contacts_page.dart';
+import 'contacts_page.dart'; // added this while call page integrating
 
 class CallsScreen extends StatefulWidget {
   const CallsScreen({super.key});
@@ -129,7 +129,7 @@ class _CallsScreenState extends State<CallsScreen> {
     );
   }
 
-  /// Updated _buttons with onTap
+  /// Updated _buttons with onTap (to fetch contacts)
   Widget _buttons({
     required IconData icon,
     required String text,

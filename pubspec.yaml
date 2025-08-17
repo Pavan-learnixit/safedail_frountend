@@ -44,11 +44,15 @@ dependencies:
     sdk: flutter
   intl: ^0.20.0
   flutter_animate: ^4.5.2
+<<<<<<< HEAD
   #contacts_service: ^0.6.3    since it is outdated and no compatible wid new AGP
   flutter_contacts: ^1.1.5
 
 
 
+=======
+  http: ^0.13.6
+>>>>>>> 4b21101ad16be2d59c8e83782111075f078758a9
 
 dev_dependencies:
   flutter_test:
