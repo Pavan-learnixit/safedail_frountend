@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:truecaller_clone/features/presentation/pages/assistence_page.dart';
 import 'package:truecaller_clone/features/presentation/pages/calls_screen.dart';
+
+import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
+
+import '../pages/message_screen.dart';
+
 import 'package:truecaller_clone/features/presentation/pages/default_sms_page.dart';
 
 import '../pages/block_screen.dart';
+
 
 class CustomBottomNaviaionBarScreen extends StatefulWidget {
   @override
@@ -18,10 +24,17 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
   final List<Widget> _screens = [
     const CallsScreen(),
     // Container(),
+
+    MessagesScreen(),
+    Container(),
+    premiumscreen(),
+    Container(),
+
     DefaultSmsPage(),
     BlockingScreen(),
     Container(),
     AssistantancePage()
+
   ];
 
   // Titles for AppBar

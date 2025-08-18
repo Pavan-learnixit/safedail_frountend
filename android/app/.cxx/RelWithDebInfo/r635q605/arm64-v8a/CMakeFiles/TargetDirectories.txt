@@ -1,0 +1,2 @@
+C:/Users/arjun/StudioProjects/safedail_frountend/android/app/.cxx/RelWithDebInfo/r635q605/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/arjun/StudioProjects/safedail_frountend/android/app/.cxx/RelWithDebInfo/r635q605/arm64-v8a/CMakeFiles/rebuild_cache.dir

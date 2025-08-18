@@ -66,6 +66,7 @@ class _MyAppState extends State<MyApp> {
     // });
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Truecaller Clone',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: LanguageScreen(),
