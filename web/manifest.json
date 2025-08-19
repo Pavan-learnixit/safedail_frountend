@@ -1,6 +1,6 @@
 {
-    "name": "truecaller_clone",
-    "short_name": "truecaller_clone",
+    "name": "SafeDial",
+    "short_name": "SafeDial",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -16,14 +16,20 @@ class ProfilePage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-        actions:  [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>SettingsScreen()));
-            }, icon: Icon(Icons.settings,color: Colors.black,))
-            //Icon(Icons.settings, color: Colors.black),
-          )
+              padding: EdgeInsets.only(right: 16),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => SettingsScreen()));
+                  },
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.black,
+                  ))
+              //Icon(Icons.settings, color: Colors.black),
+              )
         ],
       ),
       backgroundColor: Colors.white,
@@ -97,7 +103,8 @@ class ProfilePage extends StatelessWidget {
           // Upgrade to premium
           Card(
             child: ListTile(
-              leading: const Icon(Icons.workspace_premium, color: Colors.orange),
+              leading:
+                  const Icon(Icons.workspace_premium, color: Colors.orange),
               title: const Text('Upgrade to Premium'),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {},
@@ -108,14 +115,16 @@ class ProfilePage extends StatelessWidget {
 
           // Last 30 days stats
           Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   Row(
                     children: const [
-                      Text('Last 30 days', style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text('Last 30 days',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
                       Spacer(),
                       Icon(Icons.share),
                     ],
@@ -154,7 +163,8 @@ class ProfilePage extends StatelessWidget {
         Icon(icon, color: Colors.blue),
         const SizedBox(height: 4),
         Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-        Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+        Text(label,
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
       ],
     );
   }
@@ -162,7 +172,7 @@ class ProfilePage extends StatelessWidget {
   List<Widget> _buildFeatureList() {
     final features = [
       ["Manage blocking", Icons.block, Colors.red],
-      ["Truecaller for Wear OS", Icons.watch, Colors.green],
+      ["Safedial for Wear OS", Icons.watch, Colors.green],
       ["Inbox cleaner", Icons.cleaning_services, Colors.green],
       ["Fraud Insurance", Icons.verified_user, Colors.blue],
       ["Who viewed my profile", Icons.remove_red_eye, Colors.orange],
@@ -173,34 +183,41 @@ class ProfilePage extends StatelessWidget {
       ["Family safety", Icons.spa, Colors.green],
       ["Community", Icons.handshake, Colors.black87],
       ["Invite friends", Icons.send, Colors.black87],
-      ["Truecaller news", Icons.book, Colors.black87],
+      ["Safedial news", Icons.book, Colors.black87],
       ["Help", Icons.help_outline, Colors.black87],
     ];
 
     return features
         .map((item) => ListTile(
-      leading: Icon(item[1] as IconData, color: item[2] as Color),
-      title: Text(item[0] as String),
-      trailing: item[0] == "Who viewed my profile"
-          ? Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        decoration: BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: const Text('99+', style: TextStyle(color: Colors.white, fontSize: 12)),
-      )
-          : item[0] == "Truecaller for Wear OS" || item[0] == "Fraud Insurance" || item[0] == "Community"
-          ? Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          color: Colors.blue.shade100,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: const Text("NEW", style: TextStyle(fontSize: 10, color: Colors.blue)),
-      )
-          : null,
-    ))
+              leading: Icon(item[1] as IconData, color: item[2] as Color),
+              title: Text(item[0] as String),
+              trailing: item[0] == "Who viewed my profile"
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text('99+',
+                          style: TextStyle(color: Colors.white, fontSize: 12)),
+                    )
+                  : item[0] == "Safedial for Wear OS" ||
+                          item[0] == "Fraud Insurance" ||
+                          item[0] == "Community"
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade100,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Text("NEW",
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.blue)),
+                        )
+                      : null,
+            ))
         .toList();
   }
 }

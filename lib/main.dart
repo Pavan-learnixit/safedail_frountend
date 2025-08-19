@@ -1,14 +1,10 @@
-
-
 import 'dart:io';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:truecaller_clone/features/presentation/pages/initial_page.dart';
 import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
-import 'platform_channel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +23,10 @@ Future<void> _requestPermissions() async {
     Permission.systemAlertWindow,
     // Permission.notification,
 
-    if (Platform.isAndroid && await DeviceInfoPlugin().androidInfo.then((info) => info.version.sdkInt >= 34))
+    if (Platform.isAndroid &&
+        await DeviceInfoPlugin()
+            .androidInfo
+            .then((info) => info.version.sdkInt >= 34))
       Permission.ignoreBatteryOptimizations,
   ].request();
 
@@ -57,6 +56,7 @@ class _MyAppState extends State<MyApp> {
       _locale = newLocale;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     // Start services when app launches
@@ -66,14 +66,12 @@ class _MyAppState extends State<MyApp> {
     // });
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Truecaller Clone',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: LanguageScreen(),
-       locale: _locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      locale: _locale,
+      //localizationsDelegates: AppLocalizations.localizationsDelegates,
+      //supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
-

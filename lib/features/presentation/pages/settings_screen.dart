@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class SettingsScreen extends StatelessWidget {
   final List<SettingItem> settings = [
     SettingItem(Icons.settings, 'General'),
@@ -10,8 +8,8 @@ class SettingsScreen extends StatelessWidget {
     SettingItem(Icons.auto_awesome, 'Assistant'),
     SettingItem(Icons.lock, 'Privacy Center'),
     SettingItem(Icons.shield, 'Block'),
-    SettingItem(Icons.watch, 'Truecaller for Wear OS'),
-    SettingItem(Icons.info_outline, 'About Truecaller'),
+    SettingItem(Icons.watch, 'Safedial for Wear OS'),
+    SettingItem(Icons.info_outline, 'About Safedial'),
     SettingItem(Icons.help_outline, 'Help'),
   ];
 
@@ -29,10 +27,10 @@ class SettingsScreen extends StatelessWidget {
           _buildProfileHeader(),
           const Divider(),
           ...settings.map((item) => ListTile(
-            leading: Icon(item.icon, color: Colors.black87),
-            title: Text(item.title),
-            onTap: () {}, // Add action here
-          )),
+                leading: Icon(item.icon, color: Colors.black87),
+                title: Text(item.title),
+                onTap: () {}, // Add action here
+              )),
         ],
       ),
     );
@@ -73,7 +71,8 @@ class SettingsScreen extends StatelessWidget {
             ),
             child: Text(
               '99+',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           )
         ],
