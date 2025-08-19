@@ -63,11 +63,7 @@ import 'app_localizations_hi.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-<<<<<<< HEAD
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
-=======
     : localeName = intl.Intl.canonicalizedLocale(locale.toString());
->>>>>>> 4b21101ad16be2d59c8e83782111075f078758a9
 
   final String localeName;
 
@@ -90,28 +86,16 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-<<<<<<< HEAD
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
-=======
         delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ];
->>>>>>> 4b21101ad16be2d59c8e83782111075f078758a9
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-<<<<<<< HEAD
-    Locale('hi')
-=======
     Locale('hi'),
->>>>>>> 4b21101ad16be2d59c8e83782111075f078758a9
   ];
 
   /// No description provided for @english.
@@ -196,16 +180,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-<<<<<<< HEAD
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
-=======
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
     'that was used.',
   );
->>>>>>> 4b21101ad16be2d59c8e83782111075f078758a9
 }
