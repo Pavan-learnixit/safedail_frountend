@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:truecaller_clone/core/l10/app_localizations.dart';
 import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
 import 'package:truecaller_clone/platform_channel.dart';
 
