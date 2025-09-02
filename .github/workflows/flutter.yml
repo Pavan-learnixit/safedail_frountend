@@ -21,7 +21,8 @@ jobs:
     - name: 💡 Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.22.3'
+        flutter-version: '3.27.0'
+        channel: 'stable'
 
     - name: 🔁 Cache dependencies
       uses: actions/cache@v4
