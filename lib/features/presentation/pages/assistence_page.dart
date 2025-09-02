@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:truecaller_clone/features/presentation/pages/profile_page.dart';
+import 'package:truecaller_clone/features/presentation/pages/update_profile_page.dart';
 import 'package:truecaller_clone/features/presentation/widgets/search_bar.dart';
-
-
 
 class AssistantancePage extends StatefulWidget {
   @override
@@ -11,7 +8,7 @@ class AssistantancePage extends StatefulWidget {
 }
 
 class _AssistantancePageState extends State<AssistantancePage> {
-  TextEditingController searchController=TextEditingController();
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,14 +48,22 @@ class _AssistantancePageState extends State<AssistantancePage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                buildSearchBar(controller: searchController, suffixOnPressed: () {  }, prefixOnPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
-                }, onSubmitted: (value) {  },height: 60),
-          
+                buildSearchBar(
+                    controller: searchController,
+                    suffixOnPressed: () {},
+                    prefixOnPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => UpdateProfilePage()));
+                    },
+                    onSubmitted: (value) {},
+                    height: 60),
                 ListTile(
                   title: Text('Assistant status'),
                   trailing: Icon(Icons.settings),
-                  subtitle: Text('Inactive', style: TextStyle(color: Colors.red)),
+                  subtitle:
+                      Text('Inactive', style: TextStyle(color: Colors.red)),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -89,9 +94,11 @@ class _AssistantancePageState extends State<AssistantancePage> {
                           SizedBox(height: 10),
                           Text(
                             'Get our AI Assistant',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          Text('Upgrade to Premium to allow the Assistant to answer incoming calls for you'),
+                          Text(
+                              'Upgrade to Premium to allow the Assistant to answer incoming calls for you'),
                           SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: () {},

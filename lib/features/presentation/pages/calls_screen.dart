@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:truecaller_clone/features/presentation/pages/profile_page.dart';
+import 'package:truecaller_clone/features/presentation/pages/update_profile_page.dart';
 import 'package:truecaller_clone/features/presentation/widgets/call_widget.dart';
 import 'package:truecaller_clone/features/presentation/widgets/search_bar.dart';
 
@@ -30,7 +30,7 @@ class _CallsScreenState extends State<CallsScreen> {
                   suffixOnPressed: () {},
                   prefixOnPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => ProfilePage()));
+                        MaterialPageRoute(builder: (_) => UpdateProfilePage()));
                   },
                   onSubmitted: (value) {},
                   height: 60),

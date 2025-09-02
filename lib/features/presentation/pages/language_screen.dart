@@ -4,6 +4,10 @@ import 'package:truecaller_clone/core/l10/app_localizations.dart';
 import 'package:truecaller_clone/features/presentation/pages/initial_page.dart';
 
 import '../../../main.dart';
+// add SafeDial feature pages
+import 'send_otp_page.dart';
+import 'sync_contacts_page.dart';
+import 'update_profile_page.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
@@ -90,7 +94,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 AppLocalizations.of(context)!.safeDial,
@@ -99,39 +102,19 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     .displaySmall
                     ?.copyWith(color: Colors.blue, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Text(
                 AppLocalizations.of(context)!.welcomeText,
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
                     color: Colors.black, fontWeight: FontWeight.normal),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Text(
                 AppLocalizations.of(context)!.pickYourLang,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Colors.grey, fontWeight: FontWeight.normal),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     _container(100, 200, localization.english,""),
-              //     _container(100, 200, localization.hindi,""),
-              //   ],
-              // ),
-              // Wrap(
-              //   spacing: 12,
-              //   runSpacing: 12,
-              //   children: languages.map((lang) {
-              //     return _languageCard(lang['symbol']!, lang['label']!, lang['code']!);
-              //   }).toList(),
-              // ),
+              const SizedBox(height: 20),
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 2,
@@ -149,6 +132,38 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   }).toList(),
                 ),
               ),
+
+              // 👇 Added API Testing Menu for SafeDial
+              const Divider(thickness: 2),
+              const Text("SafeDial API Demo",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => SendOtpPage())),
+                    child: const Text("Send OTP"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => UpdateProfilePage())),
+                    child: const Text("Update Profile"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => UpdateProfilePage())),
+                    child: const Text("Get Profile"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => SyncContactsPage())),
+                    child: const Text("Sync Contacts"),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -161,7 +176,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       onTap: () {
         MyApp.setLocale(context, Locale(code));
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => InitialPage()));
+            context, MaterialPageRoute(builder: (_) => const InitialPage()));
       },
       child: Container(
         padding: const EdgeInsets.all(12),

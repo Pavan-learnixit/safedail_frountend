@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:truecaller_clone/features/presentation/pages/assistence_page.dart';
+import 'package:truecaller_clone/features/presentation/pages/block_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/calls_screen.dart';
-
+import 'package:truecaller_clone/features/presentation/pages/message_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
-
-import '../pages/message_screen.dart';
-
-import 'package:truecaller_clone/features/presentation/pages/default_sms_page.dart';
-
-import '../pages/block_screen.dart';
-
 
 class CustomBottomNaviaionBarScreen extends StatefulWidget {
   @override
@@ -20,21 +13,13 @@ class CustomBottomNaviaionBarScreen extends StatefulWidget {
 class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
   int _currentIndex = 0;
 
-  // Screens for each tab
+  // Screens for each tab (must match BottomNavigationBar items)
   final List<Widget> _screens = [
     const CallsScreen(),
-    // Container(),
-
     MessagesScreen(),
-    Container(),
-    premiumscreen(),
-    Container(),
-
-    DefaultSmsPage(),
     BlockingScreen(),
-    Container(),
-    AssistantancePage()
-
+    premiumscreen(),
+    AssistantancePage(),
   ];
 
   // Titles for AppBar
@@ -43,40 +28,18 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
     'Messages',
     'Blocking',
     'Premium',
-    'Assistant'
+    'Assistant',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: const Size.fromHeight(200),
-      //   child: AppBar(
-      //     // leading: _currentIndex == 1 || _currentIndex == 0
-      //     //     ? IconButton(
-      //     //         icon: Icon(Icons.person),
-      //     //         onPressed: () {
-      //     //           // Handle profile tap
-      //     //         },
-      //     //       )
-      //     //     : null,
-      //     title: _currentIndex == 1 || _currentIndex == 0
-      //         ? _buildSearchBar()
-      //         : Text(_titles[_currentIndex]),
-      //     // actions: _currentIndex == 1 || _currentIndex == 0
-      //     //     ? [
-      //     //         IconButton(
-      //     //           icon: Icon(Icons.more_vert),
-      //     //           onPressed: () {
-      //     //             // Handle overflow menu
-      //     //           },
-      //     //         ),
-      //     //       ]
-      //     //     : [],
-      //   ),
-      // ),
-
-      // AppBar(title: Text(_titles[_currentIndex])),
+      appBar: AppBar(
+        title: (_currentIndex == 0 || _currentIndex == 1)
+            ? _buildSearchBar()
+            : Text(_titles[_currentIndex]),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -86,6 +49,8 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.call),
@@ -114,17 +79,18 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
 
   Widget _buildSearchBar() {
     return Material(
-      elevation: 10,
+      elevation: 2,
+      color: Colors.transparent,
       child: Container(
         height: 40,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Row(
           children: [
-            IconButton( color: Colors.grey, onPressed: () {  }, icon: Icon(Icons.person),),
+            Icon(Icons.search, color: Colors.grey),
             const SizedBox(width: 8),
             Expanded(
               child: TextField(
@@ -138,16 +104,10 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
                 },
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {
-
-              },
-            ),
+            Icon(Icons.more_vert, color: Colors.grey),
           ],
         ),
       ),
     );
   }
-
 }
