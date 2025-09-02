@@ -1,14 +1,12 @@
-name: Flutter CI
+name: Flutter Build (Development Branch Only)
 
 on:
   push:
     branches:
       - development
-      - '**'
   pull_request:
     branches:
       - development
-      - '**'
 
 jobs:
   build:
@@ -42,11 +40,22 @@ jobs:
     - name: 🧪 Run tests (non-blocking)
       run: flutter test || true
 
-    - name: 🏗️ Build debug APK
-      run: flutter build apk --debug
+    # ⚡ Build Split-per-ABI APKs
+    - name: 🏗️ Build split-per-abi APKs
+      run: flutter build apk --release --split-per-abi
 
-    - name: 📤 Upload debug APK
+    - name: 📤 Upload split APKs
       uses: actions/upload-artifact@v4
       with:
-        name: debug-apk
-        path: build/app/outputs/flutter-apk/app-debug.apk
+        name: split-apks
+        path: build/app/outputs/flutter-apk/*-release.apk
+
+    # ⚡ Build Release AAB
+    - name: 🏗️ Build release AAB
+      run: flutter build appbundle --release
+
+    - name: 📤 Upload release AAB
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-aab
+        path: build/app/outputs/bundle/release/app-release.aab
