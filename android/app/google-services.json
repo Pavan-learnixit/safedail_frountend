@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "281117507819",
+    "project_id": "safedial-ca0ba",
+    "storage_bucket": "safedial-ca0ba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281117507819:android:c948193f014cec41fcfeae",
+        "android_client_info": {
+          "package_name": "App.learnixit.safedial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHU9gRiCgw-G74r1wFrH35ToAMQCZQXjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281117507819:android:808d3212b4956e5efcfeae",
+        "android_client_info": {
+          "package_name": "com.example.truecaller_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHU9gRiCgw-G74r1wFrH35ToAMQCZQXjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
