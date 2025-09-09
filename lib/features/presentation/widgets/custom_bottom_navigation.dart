@@ -22,7 +22,7 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
 
   // Screens for each tab
   final List<Widget> _screens = [
-    const CallsScreen(),
+    // const CallsScreen(),
     // Container(),
 
     MessagesScreen(),

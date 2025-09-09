@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:truecaller_clone/features/presentation/pages/initial_page.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../core/l10/app_localizations.dart';
 import '../../../main.dart';
 
 class LanguageScreen extends StatefulWidget {

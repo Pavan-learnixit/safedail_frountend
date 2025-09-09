@@ -1,13 +1,14 @@
 import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
+// import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
 import 'package:truecaller_clone/platform_channel.dart';
 
+import '../../../core/l10/app_localizations.dart';
 import '../utilities/colors.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/permission_popup.dart';
@@ -160,11 +161,11 @@ class _InitialPageState extends State<InitialPage> {
       Permission.contacts,
       Permission.systemAlertWindow,
       Permission.notification,
-      if (Platform.isAndroid &&
-          await DeviceInfoPlugin()
-              .androidInfo
-              .then((info) => info.version.sdkInt >= 34))
-        Permission.ignoreBatteryOptimizations,
+      // if (Platform.isAndroid &&
+      //     await DeviceInfoPlugin()
+      //         .androidInfo
+      //         .then((info) => info.version.sdkInt >= 34))
+      //   Permission.ignoreBatteryOptimizations,
     ].request();
 
     if (statuses.values.any((status) => status.isPermanentlyDenied)) {
