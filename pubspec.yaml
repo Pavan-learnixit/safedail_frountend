@@ -38,12 +38,16 @@ dependencies:
   permission_handler: ^11.3.1
   flutter_overlay_window: ^0.5.0
   #telephony_fix: ^0.2.1
-  device_info_plus: ^11.3.0
+#  device_info_plus: ^11.3.0
   flutter_localization: ^0.3.0
+<<<<<<< HEAD
   intl: ^0.19.0
+=======
+  intl: ^0.20.0
+>>>>>>> 93bda708738ad5274ba072065752f4ac7a48a35f
   flutter_animate: ^4.5.2
   #contacts_service: ^0.6.3
-  flutter_contacts: ^1.1.8
+#  flutter_contacts: ^1.1.9+2
 
 
 dev_dependencies:
