@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-
-import '../features/presentation/pages/verify_otp_screen.dart';
-import '../features/presentation/utilities/token_storage.dart';
-import 'features/presentation/utilities/profile.dart';
+import '../../../../core/utils/token_storage.dart';
+import '../../domain/entities/profile.dart';
+import '../../domain/entities/otp_result.dart';
+import '../../domain/entities/signup_response.dart';
 
 
 class ApiService {
   static const String baseUrl =
       "https://safedialservice-281117507819.europe-west1.run.app/api/v1";
 
-  static Future<http.Response> sendOtp(String phoneNumber) async {
+  Future<http.Response> sendOtp(String phoneNumber) async {
     final url = Uri.parse("$baseUrl/sendotp");
     print("Sending OTP to: $phoneNumber");
     print("Request URL: $url");
@@ -80,7 +80,7 @@ class ApiService {
       return OtpResult.networkError;
     }
   }
-  static Future<Map<String, dynamic>> signup(Map<String, dynamic> payload) async {
+  Future<SignupResponse> signup(Map<String, dynamic> payload) async {
     final url = Uri.parse("$baseUrl/signup");
 
     try {
@@ -90,16 +90,14 @@ class ApiService {
         body: jsonEncode(payload),
       );
 
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        return {"success": false, "message": "Server error: ${response.statusCode}"};
-      }
+      final data = jsonDecode(response.body);
+      return SignupResponse.fromJson(data);
     } catch (e) {
-      return {"success": false, "message": "Exception: $e"};
+      return SignupResponse(success: false, message: "Exception: $e");
     }
   }
-  static Future<Map<String, dynamic>> logout() async {
+
+  Future<Map<String, dynamic>> logout() async {
     final url = Uri.parse("$baseUrl/logout");
     final token = await TokenStorage.getToken();
 
@@ -130,7 +128,7 @@ class ApiService {
     }
   }
   // Update Profile (PUT)
-  static Future<Map<String, dynamic>> updateProfile(Profile profile) async {
+  Future<Map<String, dynamic>> updateProfile(Profile profile) async {
     final token = await TokenStorage.getToken();
 
     final response = await http.put(
@@ -145,7 +143,7 @@ class ApiService {
   }
 
   // Get Profile
-  static Future<Profile> getProfile() async {
+  Future<Profile> getProfile() async {
     final token = await TokenStorage.getToken();
 
     final response = await http.get(

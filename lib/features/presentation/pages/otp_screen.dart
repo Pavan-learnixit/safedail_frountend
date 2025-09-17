@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../api_service.dart';
+import '../../auth/domain/repositories/auth_repository.dart';
 
 class OtpScreen extends StatefulWidget {
+  final AuthRepository authRepository;
   final String name, email, phone, password;
 
-  OtpScreen({required this.name, required this.email, required this.phone, required this.password});
+  const OtpScreen({required this.name, required this.email, required this.phone, required this.password, required this.authRepository});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -17,7 +18,7 @@ class _OtpScreenState extends State<OtpScreen> {
     final otp = otpController.text.trim();
     if (otp.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter the OTP")),
+        const SnackBar(content: const Text("Please enter the OTP")),
       );
       return;
     }
@@ -31,14 +32,13 @@ class _OtpScreenState extends State<OtpScreen> {
     };
 
     try {
-      final result = await ApiService.signup(request);
-      if (result['success']) {
-        Navigator.pushReplacementNamed(context, '/home');
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(result['message'] ?? "Signup failed")),
-        );
-      }
+      final result = await widget.authRepository.signup(request);
+      result.fold(
+            (failure) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(failure.message)),
+        ),
+            (response) => Navigator.pushReplacementNamed(context, '/home'),
+      );
     } catch (e) {
       print("Error: $e");
     }
@@ -47,15 +47,15 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Verify OTP")),
+      appBar: AppBar(title: const Text("Verify OTP")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text("Enter OTP sent to ${widget.phone}", style: TextStyle(fontSize: 16)),
-            TextField(controller: otpController, decoration: InputDecoration(labelText: "OTP")),
-            SizedBox(height: 20),
-            ElevatedButton(onPressed: verifyOtp, child: Text("Verify & Sign Up")),
+            Text("Enter OTP sent to ${widget.phone}", style: const TextStyle(fontSize: 16)),
+            TextField(controller: otpController, decoration: const InputDecoration(labelText: "OTP")),
+            const SizedBox(height: 20),
+            ElevatedButton(onPressed: verifyOtp, child: const Text("Verify & Sign Up")),
           ],
         ),
       ),

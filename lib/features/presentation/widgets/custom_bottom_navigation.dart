@@ -24,7 +24,6 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
   final List<Widget> _screens = [
     // const CallsScreen(),
     // Container(),
-
     MessagesScreen(),
     // Container(),
 
