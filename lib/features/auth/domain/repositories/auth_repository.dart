@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import '../entities/profile.dart';
 import '../entities/otp_result.dart';
 import '../entities/signup_response.dart';
-
 abstract class AuthRepository {
   Future<Either<Failure, void>> sendOtp(String phone);
   Future<Either<Failure, OtpResult>> verifyOtp(String phone, String otp);
@@ -11,5 +10,4 @@ abstract class AuthRepository {
   Future<Either<Failure, Profile>> getProfile();
   Future<Either<Failure, String>> logout();
   Future<Either<Failure, String>> updateProfile(Profile profile);
-
 }

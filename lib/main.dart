@@ -1,18 +1,14 @@
-import 'dart:io';
-
-// import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
-
 import 'core/l10/app_localizations.dart';
-import 'features/presentation/pages/login_screen.dart';
-
-// import 'core/l10/app_localizations.dart';
-
+import 'features/presentation/bloc/user_bloc.dart';
+import 'features/presentation/pages/signup_screen.dart';
+import 'injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   await _requestPermissions();
   runApp(const MyApp());
 }
@@ -73,7 +69,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Truecaller Clone',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: LanguageScreen(),
+      home: BlocProvider<UserBloc>(
+        create: (_) => getIt<UserBloc>(),
+        child: SignupScreen(),
+      ),
       locale: _locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import '../../../../core/utils/token_storage.dart';
 import '../../domain/entities/profile.dart';
 import '../../domain/entities/otp_result.dart';
 import '../../domain/entities/signup_response.dart';
 
-
+@injectable
 class ApiService {
   static const String baseUrl =
       "https://safedialservice-281117507819.europe-west1.run.app/api/v1";

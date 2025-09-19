@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../auth/data/datasources/api_service.dart';
-import '../../auth/data/repositories/auth_repository_impl.dart';
-import '../../auth/domain/usecases/send_otp_usecase.dart';
-import '../../auth/domain/usecases/verify_otp_usecase.dart';
-import '../bloc/login_bloc.dart';
-import '../bloc/login_event.dart';
-import '../bloc/login_state.dart';
-import '../bloc/verify_otp_bloc.dart';
-import 'verify_otp_screen.dart';
+import '../bloc/user_bloc.dart';
+import 'package:truecaller_clone/features/presentation/bloc/user_events.dart';
+import 'package:truecaller_clone/features/presentation/bloc/user_states.dart';
+import 'package:truecaller_clone/features/presentation/pages/verify_otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -45,20 +40,14 @@ class _LoginScreenState extends State<LoginScreen> {
         foregroundColor: Colors.black,
       ),
       body: SafeArea(
-        child: BlocListener<LoginBloc, LoginState>(
+        child: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
-            if (state is OtpSentSuccess) {
+            if (state is OtpSent) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => BlocProvider<VerifyOtpBloc>(
-                    create: (_) {
-                      final apiService = ApiService();
-                      final authRepository = AuthRepositoryImpl(apiService);
-                      final verifyOtpUseCase = VerifyOtpUseCase(authRepository);
-                      final sendOtpUseCase = SendOtpUseCase(authRepository);
-                      return VerifyOtpBloc(verifyOtpUseCase, sendOtpUseCase);
-                    },
+                  builder: (_) => BlocProvider.value(
+                    value: context.read<UserBloc>(),
                     child: VerifyOtpScreen(
                       phoneNumber: phoneController.text,
                       isSignupFlow: false,
@@ -66,12 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               );
-
-            } else if (state is LoginFailure) {
+            } else if (state is UserError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
               );
             }
+
           },
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -125,9 +114,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (!isPhoneValid && phoneController.text.isNotEmpty)
                   const Text("Phone number must be 10 digits", style: TextStyle(color: Colors.red)),
                 const SizedBox(height: 20),
-                BlocBuilder<LoginBloc, LoginState>(
+                BlocBuilder<UserBloc, UserState>(
                   builder: (context, state) {
-                    final isLoading = state is LoginLoading;
+                    final isLoading = state is UserLoading;
+
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -138,8 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         onPressed: isLoading || !isPhoneValid
                             ? null
-                            : () => context.read<LoginBloc>().add(
-                          SendOtpPressed(phoneController.text),
+                            : () => context.read<UserBloc>().add(
+                          SendOtpEvent(phoneController.text),
                         ),
                         child: isLoading
                             ? const SizedBox(
