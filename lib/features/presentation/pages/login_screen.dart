@@ -128,8 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         onPressed: isLoading || !isPhoneValid
                             ? null
-                            : () => context.read<UserBloc>().add(
-                          SendOtpEvent(phoneController.text),
+                            : () => context.read<UserBloc>().add(SendOtpEvent(phoneController.text),
                         ),
                         child: isLoading
                             ? const SizedBox(

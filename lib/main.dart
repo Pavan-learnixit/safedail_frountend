@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
 import 'core/l10/app_localizations.dart';
+import 'features/presentation/bloc/user_bloc.dart';
+import 'injection.config.dart';
 import 'injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
+  setupDependencies();
   await _requestPermissions();
   runApp(const MyApp());
 }
@@ -57,19 +60,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Start services when app launches
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   CallPlatformChannel.startCallService();
-    //   CallPlatformChannel.requestDialerRole();
-    // });
-
-    return MaterialApp(
-      title: 'Truecaller Clone',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: LanguageScreen(),
-      locale: _locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+    return BlocProvider<UserBloc>(
+      create: (_) => getIt<UserBloc>(),
+      child: MaterialApp(
+        title: 'Truecaller Clone',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: const LanguageScreen(),
+        locale: _locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
 }

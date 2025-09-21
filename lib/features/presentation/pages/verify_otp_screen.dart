@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:truecaller_clone/features/presentation/pages/backup_screen.dart';
 import '../../presentation/bloc/user_bloc.dart';
 import '../../presentation/bloc/user_events.dart';
 import '../../presentation/bloc/user_states.dart';
@@ -77,7 +78,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               );
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.of(context, rootNavigator: true).pushReplacement(
-                  MaterialPageRoute(builder: (_) => CustomBottomNaviaionBarScreen()),
+                  MaterialPageRoute(builder: (_) => const BackupScreen()),
                 );
               });
             } else if (state is UserError) {

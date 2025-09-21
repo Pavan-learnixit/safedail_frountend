@@ -122,6 +122,7 @@ class _InitialPageState extends State<InitialPage> {
                         CallPlatformChannel.startCallService();
                         CallPlatformChannel.requestDialerRole();
                       });
+
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
