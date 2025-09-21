@@ -78,7 +78,9 @@ class ProfilePage extends StatelessWidget {
             children: [
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+
+                  },
                   icon: const Icon(Icons.edit),
                   label: const Text("Edit profile"),
                 ),

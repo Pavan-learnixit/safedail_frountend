@@ -65,7 +65,7 @@ class _AssistantancePageState extends State<AssistantancePage> {
                   children: [
                     ElevatedButton(
                       onPressed: () {},
-                      child: Text('All'),
+                      child:const  Text('All'),
                     ),
                     ElevatedButton(
                       onPressed: () {},

@@ -56,3 +56,8 @@ android {
 flutter {
     source = "../.."
 }
+dependencies {
+    // ✅ Add missing annotation libraries so R8 can resolve them
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'          // for javax.annotation.*
+    implementation 'com.google.errorprone:error_prone_annotations:2.21.1' // for com.google.errorprone.annotations.*
+}

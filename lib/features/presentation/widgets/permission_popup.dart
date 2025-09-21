@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:truecaller_clone/features/presentation/pages/signup_screen.dart';
 
 import '../pages/backup_screen.dart';
 
@@ -199,7 +200,7 @@ class PermissionPopupStep2 extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>BackupScreen()), (Route<dynamic> route)=> false );
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>SignupScreen()), (Route<dynamic> route)=> false );
 
                     // Navigator.of(context).pop(); // close d dialog
                     // Navigator.of(context).pushReplacement(
