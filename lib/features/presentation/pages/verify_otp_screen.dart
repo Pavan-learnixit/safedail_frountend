@@ -30,6 +30,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   bool isOtpValid = false;
   int resendCooldown = 30;
   bool canResend = false;
+  bool isResend = false;
+  bool otpSnackbarShown = false;
   Timer? _resendTimer;
 
   void startResendCooldown() {
@@ -68,7 +70,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       body: SafeArea(
         child: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
-            if (state is OtpVerified) {
+            if (state is SignupSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("Your account has been created successfully!"),
@@ -85,12 +87,16 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
               );
-            } else if (state is OtpSent) {
+            } else if (state is OtpSent && isResend) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("OTP resent successfully")),
+                SnackBar(content: Text("OTP resent successfully")),
               );
               startResendCooldown();
+              setState(() {
+                isResend = false;
+              });
             }
+
           },
           child: Center(
             child: SingleChildScrollView(
@@ -168,9 +174,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         const Text("Didn't receive OTP?", style: TextStyle(fontSize: 14)),
                         TextButton(
                           onPressed: canResend
-                              ? () => context.read<UserBloc>().add(
-                            SendOtpEvent(widget.phoneNumber),
-                          )
+                              ? () {
+                            setState(() {
+                              isResend = true;
+                            });
+                            context.read<UserBloc>().add(SendOtpEvent(widget.phoneNumber));
+                          }
                               : null,
                           child: Text(
                             canResend ? "Resend" : "Resend in $resendCooldown",

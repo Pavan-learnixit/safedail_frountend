@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:truecaller_clone/features/presentation/pages/settings_screen.dart';
+import 'package:truecaller_clone/features/presentation/pages/update_profile_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -79,7 +80,10 @@ class ProfilePage extends StatelessWidget {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const UpdateProfilePage()));
                   },
                   icon: const Icon(Icons.edit),
                   label: const Text("Edit profile"),
