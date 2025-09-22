@@ -1,4 +1,4 @@
-name: Flutter APK CI
+name: Flutter CI
 
 on:
   push:
@@ -34,16 +34,8 @@ jobs:
     - name: 📦 Install dependencies
       run: flutter pub get
 
-    - name: ✅ Run dummy test
-      run: |
-        echo "import 'package:flutter_test/flutter_test.dart';
-
-        void main() {
-          test('dummy test', () {
-            expect(1 + 1, 2);
-          });
-        }" > test/app_test.dart
-        flutter test
+    - name: ✅ Run tests
+      run: flutter test
 
     # Universal APK
     - name: 🏗️ Build universal release APK
