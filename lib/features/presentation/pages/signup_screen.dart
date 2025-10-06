@@ -51,33 +51,41 @@ class _SignupScreenState extends State<SignupScreen> {
     String? prefixText,
     String? errorText,
   }) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return InputDecoration(
       hintText: hint,
       counterText: "",
       prefixText: prefixText,
       errorText: errorText,
       filled: true,
-      fillColor: Colors.grey.shade200,
+      fillColor: colorScheme.surfaceVariant,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(13),
         borderSide: BorderSide.none,
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      prefixIcon: Icon(icon, color: Colors.grey.shade600),
+      prefixIcon: Icon(icon, color: colorScheme.onSurfaceVariant),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Signup', style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900, color: Colors.black)),
+        title: Text(
+          'Signup',
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
+        ),
         centerTitle: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
+        foregroundColor: Theme.of(context).colorScheme.onBackground,
       ),
-      backgroundColor: const Color(0xFFffffff),
+      backgroundColor: Theme.of(context).colorScheme.background,
+
       body: SafeArea(
         child: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
@@ -120,7 +128,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: MediaQuery.of(context).size.height * 0.35,
                       child: Image.asset("assets/images/signupimage.png", fit: BoxFit.cover),
                     ),
-                    const Text("Create Account", style: TextStyle(fontSize: 28, color: Colors.black)),
+                    Text("Create Account", style: Theme.of(context).textTheme.headlineSmall),
                     const SizedBox(height: 16),
                     TextField(
                       controller: firstNameController,
@@ -175,8 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         });
                       },
                     ),
-                    if (!isPhoneValid && phoneController.text.isNotEmpty)
-                      const Text("Phone number must be 10 digits", style: TextStyle(color: Colors.red)),
+                    if (!isPhoneValid && phoneController.text.isNotEmpty)Text("Phone number must be 10 digits", style: TextStyle(color: Theme.of(context).colorScheme.error)),
                     const SizedBox(height: 16),
                     BlocBuilder<UserBloc, UserState>(
                       builder: (context, state) {
@@ -197,7 +204,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account? ", style: TextStyle(color: Colors.grey[600], fontSize: 18)),
+                        Text("Already have an account? ", style: Theme.of(context).textTheme.bodyMedium),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -210,7 +217,10 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             );
                           },
-                          child: const Text("Login", style: TextStyle(fontSize: 20, color: Colors.blue, fontWeight: FontWeight.bold)),
+                          child: Text("Login", style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          )),
                         ),
                       ],
                     ),

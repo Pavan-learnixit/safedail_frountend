@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-class premium_screen2 extends StatelessWidget {
-  premium_screen2({super.key});
+
+class PremiumScreen2 extends StatelessWidget {
+  PremiumScreen2({super.key});
   final ScrollController _scrollController = ScrollController();
   final GlobalKey sectionKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return SafeArea(
       child: SingleChildScrollView(
         controller: _scrollController,
@@ -13,7 +18,7 @@ class premium_screen2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Icon(Icons.keyboard_arrow_down),
+              icon: Icon(Icons.keyboard_arrow_down, color: colorScheme.onBackground),
               onPressed: () {
                 Scrollable.ensureVisible(
                   sectionKey.currentContext!,
@@ -26,9 +31,9 @@ class premium_screen2 extends StatelessWidget {
               key: sectionKey,
               height: 150,
               width: MediaQuery.of(context).size.width * 0.85,
-              margin: EdgeInsets.all(24), // Uniform spacing from all sides
+              margin: EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Color(0xFFe7f0ff),
+                color: colorScheme.surfaceVariant,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
@@ -37,26 +42,40 @@ class premium_screen2 extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.block,color: Colors.blueAccent,),
-                        Text("No Ads ",style: TextStyle(fontSize: 20,color: Colors.grey,fontWeight: FontWeight.bold),),
+                        Icon(Icons.block, color: colorScheme.primary),
+                        SizedBox(width: 8),
+                        Text(
+                          "No Ads",
+                          style: textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
                       ],
                     ),
-                    Align(alignment: Alignment.centerLeft,
-                        child: Text("Enjoy Safedail without any ads",style: TextStyle(fontSize: 16,color: Colors.grey),)),
-                    SizedBox(height: 10,),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Enjoy Safedail without any ads",
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           children: [
-                            Icon(Icons.check_circle,color: Colors.green,),
-                            Text("Premium"),
+                            Icon(Icons.check_circle, color: Colors.green),
+                            Text("Premium", style: textTheme.bodySmall),
                           ],
                         ),
                         Column(
                           children: [
-                            Icon(Icons.check_circle,color: Colors.green,),
-                            Text("Family"),
+                            Icon(Icons.check_circle, color: Colors.green),
+                            Text("Family", style: textTheme.bodySmall),
                           ],
                         ),
                       ],
@@ -68,7 +87,6 @@ class premium_screen2 extends StatelessWidget {
           ],
         ),
       ),
-    )
-    ;
+    );
   }
 }

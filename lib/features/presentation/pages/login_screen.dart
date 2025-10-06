@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController phoneController = TextEditingController();
 
@@ -23,21 +24,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFf9f9f9),
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Login',
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.w900,
-            color: Colors.black,
-          ),
+          style: textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
         ),
         centerTitle: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
+        foregroundColor: colorScheme.onBackground,
       ),
       body: SafeArea(
         child: BlocListener<UserBloc, UserState>(
@@ -60,7 +61,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 SnackBar(content: Text(state.message)),
               );
             }
-
           },
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -70,21 +70,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 Image.asset("assets/images/loginimage.png", width: 200, height: 200),
                 const SizedBox(height: 16),
                 RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     children: [
                       TextSpan(
                         text: "Welcome to ",
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
+                        style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w500),
                       ),
                       TextSpan(
                         text: "Safe Dial",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900, color: Colors.black),
+                        style: textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text("Enter Your Phone Number To Login", style: TextStyle(fontSize: 17)),
+                Text(
+                  "Enter Your Phone Number To Login",
+                  style: textTheme.bodyMedium,
+                ),
                 const SizedBox(height: 24),
                 TextField(
                   controller: phoneController,
@@ -94,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: "Phone Number",
                     counterText: "",
                     filled: true,
-                    fillColor: Colors.grey.shade200,
+                    fillColor: colorScheme.surfaceVariant,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(13),
                       borderSide: BorderSide.none,
@@ -112,7 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 if (!isPhoneValid && phoneController.text.isNotEmpty)
-                  const Text("Phone number must be 10 digits", style: TextStyle(color: Colors.red)),
+                  Text(
+                    "Phone number must be 10 digits",
+                    style: TextStyle(color: colorScheme.error),
+                  ),
                 const SizedBox(height: 20),
                 BlocBuilder<UserBloc, UserState>(
                   builder: (context, state) {
@@ -122,21 +128,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue.shade500,
+                          backgroundColor: colorScheme.primary,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
                         onPressed: isLoading || !isPhoneValid
                             ? null
-                            : () => context.read<UserBloc>().add(SendOtpEvent(phoneController.text),
-                        ),
+                            : () => context.read<UserBloc>().add(SendOtpEvent(phoneController.text)),
                         child: isLoading
                             ? const SizedBox(
                           height: 20,
                           width: 20,
-                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
                         )
-                            : const Text("Send OTP", style: TextStyle(fontSize: 20, color: Colors.white)),
+                            : Text(
+                          "Send OTP",
+                          style: textTheme.titleMedium?.copyWith(color: colorScheme.onPrimary),
+                        ),
                       ),
                     );
                   },

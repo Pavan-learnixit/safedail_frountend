@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:truecaller_clone/features/presentation/pages/settings_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/update_profile_page.dart';
+import 'connect_withus_screen.dart';
+import 'help_screen.dart';
+import 'invite_friends_screen.dart';
+import 'theme_selection_screen.dart';
+import 'GetVerificationScreen.dart';
+import 'government_services_screen.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -92,7 +98,12 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => GetVerificationPage()),
+                    );
+                  },
                   icon: const Icon(Icons.verified_user_outlined),
                   label: const Text("Get verified"),
                   style: ElevatedButton.styleFrom(
@@ -156,7 +167,7 @@ class ProfilePage extends StatelessWidget {
 
           // Feature List
           const Divider(),
-          ..._buildFeatureList(),
+          ..._buildFeatureList(context),
         ],
       ),
     );
@@ -175,7 +186,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildFeatureList() {
+  List<Widget> _buildFeatureList(BuildContext context) {
     final features = [
       ["Manage blocking", Icons.block, Colors.red],
       ["Safedial for Wear OS", Icons.watch, Colors.green],
@@ -190,40 +201,69 @@ class ProfilePage extends StatelessWidget {
       ["Community", Icons.handshake, Colors.black87],
       ["Invite friends", Icons.send, Colors.black87],
       ["Safedial news", Icons.book, Colors.black87],
+      ["Connect with us", Icons.support_agent, Colors.teal],
       ["Help", Icons.help_outline, Colors.black87],
     ];
 
-    return features
-        .map((item) => ListTile(
-              leading: Icon(item[1] as IconData, color: item[2] as Color),
-              title: Text(item[0] as String),
-              trailing: item[0] == "Who viewed my profile"
-                  ? Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Text('99+',
-                          style: TextStyle(color: Colors.white, fontSize: 12)),
-                    )
-                  : item[0] == "Safedial for Wear OS" ||
-                          item[0] == "Fraud Insurance" ||
-                          item[0] == "Community"
-                      ? Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade100,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Text("NEW",
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.blue)),
-                        )
-                      : null,
-            ))
-        .toList();
+    return features.map((item) {
+      final title = item[0] as String;
+      final icon = item[1] as IconData;
+      final color = item[2] as Color;
+
+      return ListTile(
+        leading: Icon(icon, color: color),
+        title: Text(title),
+        trailing: title == "Who viewed my profile"
+            ? Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text('99+',
+              style: TextStyle(color: Colors.white, fontSize: 12)),
+        )
+            : title == "Safedial for Wear OS" ||
+            title == "Fraud Insurance" ||
+            title == "Community"
+            ? Container(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+          decoration: BoxDecoration(
+            color: Colors.blue.shade100,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text("NEW",
+              style: TextStyle(fontSize: 10, color: Colors.blue)),
+        )
+            : null,
+        onTap: title == "Change theme"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ThemeSelectionScreen()),
+        )
+            : title == "Government Services"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const GovernmentServicesScreen()),
+        )
+            : title == "Invite friends"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const InviteFriendsScreen()),
+        )
+            : title == "Help"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const HelpScreen()),
+        )
+            : title == "Connect with us"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ConnectWithUsScreen()),
+        )
+            : null,
+      );
+    }).toList();
+
   }
 }

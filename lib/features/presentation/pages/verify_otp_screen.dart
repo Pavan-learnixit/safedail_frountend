@@ -65,17 +65,23 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFfbfafa),
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
-            if (state is SignupSuccess) {
+            if (state is SignupSuccess || state is LoginSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Your account has been created successfully!"),
-                  backgroundColor: Colors.green,
-                  duration: Duration(seconds: 2),
+                SnackBar(
+                  content: Text(state is SignupSuccess
+                      ? "Your account has been created successfully!"
+                      : "Login successful"),
+                  backgroundColor: colorScheme.primary,
+                  duration: const Duration(seconds: 2),
                 ),
               );
               WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -92,11 +98,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 SnackBar(content: Text("OTP resent successfully")),
               );
               startResendCooldown();
-              setState(() {
-                isResend = false;
-              });
+              setState(() => isResend = false);
             }
-
           },
           child: Center(
             child: SingleChildScrollView(
@@ -107,18 +110,39 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   children: [
                     Image.asset("assets/images/otpverificationimage.png", width: 200, height: 200),
                     const SizedBox(height: 16),
-                    const Text("Verify OTP", style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black)),
+                    Text(
+                      "Verify OTP",
+                      style: textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                     const SizedBox(height: 8),
-                    Text("OTP sent to +91 ${widget.phoneNumber}", style: const TextStyle(fontSize: 15)),
+                    Text(
+                      "OTP sent to +91 ${widget.phoneNumber}",
+                      style: textTheme.bodyMedium,
+                    ),
                     const SizedBox(height: 24),
                     OTPTextField(
                       length: 6,
                       width: MediaQuery.of(context).size.width,
                       fieldWidth: 40,
-                      style: const TextStyle(fontSize: 17),
+                      style: Theme.of(context).textTheme.bodyLarge ?? const TextStyle(fontSize: 17),
                       textFieldAlignment: MainAxisAlignment.spaceAround,
                       fieldStyle: FieldStyle.box,
-                      onChanged: (pin) {
+                      otpFieldStyle: OtpFieldStyle(
+                        borderColor: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                focusBorderColor: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black,
+                enabledBorderColor: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black,
+                disabledBorderColor: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black,
+              ),
+
+              onChanged: (pin) {
                         setState(() {
                           enteredOtp = pin;
                           isOtpValid = pin.length == 6 && RegExp(r'^\d{6}$').hasMatch(pin);
@@ -131,10 +155,14 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         });
                       },
                     ),
+
                     if (!isOtpValid && enteredOtp.isNotEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: Text("OTP must be 6 digits", style: TextStyle(color: Colors.red, fontSize: 13)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          "OTP must be 6 digits",
+                          style: textTheme.bodySmall?.copyWith(color: colorScheme.error),
+                        ),
                       ),
                     const SizedBox(height: 24),
                     BlocBuilder<UserBloc, UserState>(
@@ -142,7 +170,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         final isVerifying = state is UserLoading;
                         return ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade500,
+                            backgroundColor: colorScheme.primary,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           ),
                           onPressed: isVerifying || !isOtpValid
@@ -158,12 +186,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                               context.read<UserBloc>().add(VerifyOtpEvent(widget.phoneNumber, enteredOtp));
                             }
                           },
-
                           child: isVerifying
-                              ? const CircularProgressIndicator(color: Colors.white)
+                              ? const CircularProgressIndicator()
                               : Text(
                             widget.isSignupFlow ? "Verify & Create Account" : "Verify OTP",
-                            style: const TextStyle(fontSize: 22, color: Colors.white),
+                            style: textTheme.titleMedium?.copyWith(color: colorScheme.onPrimary),
                           ),
                         );
                       },
@@ -171,7 +198,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Didn't receive OTP?", style: TextStyle(fontSize: 14)),
+                        Text("Didn't receive OTP?", style: textTheme.bodySmall),
                         TextButton(
                           onPressed: canResend
                               ? () {
@@ -183,8 +210,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                               : null,
                           child: Text(
                             canResend ? "Resend" : "Resend in $resendCooldown",
-                            style: TextStyle(
-                              color: canResend ? Colors.blueAccent : Colors.grey,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: canResend ? colorScheme.primary : colorScheme.onSurfaceVariant,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -200,4 +227,5 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       ),
     );
   }
+
 }
