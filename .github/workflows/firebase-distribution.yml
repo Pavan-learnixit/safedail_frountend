@@ -1,0 +1,92 @@
+name: Flutter CI
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 💡 Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.32.0'
+
+    - name: 🔁 Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.pub-cache
+          ~/.flutter
+        key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-flutter-
+
+    - name: 📦 Install dependencies
+      run: flutter pub get
+
+    - name: ✅ Analyze code (non-blocking)
+      run: flutter analyze || true
+
+    - name: 🧪 Run tests (non-blocking)
+      run: flutter test || true
+
+    # Universal APK
+    - name: 🏗️ Build universal release APK
+      run: flutter build apk --release
+
+    - name: 📤 Upload universal release APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+
+    # Split APKs per ABI
+    - name: 🏗️ Build split-per-abi APKs
+      run: flutter build apk --release --split-per-abi
+
+    - name: 📤 Upload split-per-abi APKs
+      uses: actions/upload-artifact@v4
+      with:
+        name: split-apks
+        path: build/app/outputs/flutter-apk/*.apk
+
+    # Android App Bundle (AAB)
+    - name: 🏗️ Build release AAB
+      run: flutter build appbundle --release
+
+    - name: 📤 Upload release AAB
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-aab
+        path: build/app/outputs/bundle/release/app-release.aab
+
+    # 🚀 Firebase App Distribution
+    - name: 🔧 Set up Firebase service account
+      run: |
+        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}' > $HOME/firebase-key.json
+      shell: bash
+
+    - name: 🔧 Install Firebase CLI
+      run: curl -sL https://firebase.tools | bash
+      shell: bash
+
+    - name: 🚀 Distribute APK to Firebase
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
+        firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+          --app $FIREBASE_APP_ID \
+          --release-notes "CI/CD build from GitHub Actions" \
+          --testers "sangayyam28@gmail.com"
+      env:
+        FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
