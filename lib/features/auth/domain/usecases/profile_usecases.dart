@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/error/failure.dart';
@@ -11,5 +13,12 @@ class ProfileUseCases {
 
   Future<Either<Failure, String>> updateProfile(Profile profile) {
     return repository.updateProfile(profile);
+  }
+
+  Future<Either<Failure, void>> requestVerification({
+    required File idProof,
+    required String note,
+  }) {
+    return repository.requestVerification(idProof: idProof, note: note);
   }
 }

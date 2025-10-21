@@ -6,6 +6,8 @@ abstract class UserState {}
 
 class UserInitial extends UserState {}
 class UserLoading extends UserState {}
+class VerificationSubmittedState extends UserState {}
+class VerificationSubmittingState extends UserState {}
 class OtpSent extends UserState {}
 
 class OtpVerified extends UserState {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../auth/domain/entities/profile.dart';
 
 abstract class UserEvent {}
@@ -27,6 +29,14 @@ class LoginEvent extends UserEvent {
   final String phone;
   LoginEvent(this.phone);
 }
+
+class RequestVerificationEvent extends UserEvent {
+  final File idProof;
+  final String note;
+
+  RequestVerificationEvent({required this.idProof, required this.note});
+}
+
 
 class LogoutEvent extends UserEvent {}
 

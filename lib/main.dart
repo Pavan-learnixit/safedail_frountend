@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:truecaller_clone/features/presentation/pages/language_screen.dart';
 import 'core/l10/app_localizations.dart';
+import 'features/presentation/bloc/theme_bloc.dart';
 import 'features/presentation/bloc/user_bloc.dart';
 import 'injection.config.dart';
 import 'injection.dart';
@@ -60,16 +61,26 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserBloc>(
-      create: (_) => getIt<UserBloc>(),
-      child: MaterialApp(
-        title: 'Truecaller Clone',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: const LanguageScreen(),
-        locale: _locale,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserBloc>(create: (_) => getIt<UserBloc>()),
+        BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
+      ],
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, themeState) {
+          return MaterialApp(
+            title: 'Truecaller Clone',
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            themeMode: themeState.themeMode,
+            home: const LanguageScreen(),
+            locale: _locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          );
+        },
       ),
     );
   }
+
 }

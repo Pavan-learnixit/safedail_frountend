@@ -31,7 +31,7 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
     //
     // DefaultSmsPage(),
     BlockingScreen(),
-    premiumscreen(),
+    PremiumScreen(),
     // Container(),
     AssistantancePage()
 

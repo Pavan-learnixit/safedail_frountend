@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../../../core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import '../entities/profile.dart';
@@ -10,4 +12,5 @@ abstract class AuthRepository {
   Future<Either<Failure, Profile>> getProfile();
   Future<Either<Failure, String>> logout();
   Future<Either<Failure, String>> updateProfile(Profile profile);
+  Future<Either<Failure, void>> requestVerification({required File idProof, required String note,});
 }

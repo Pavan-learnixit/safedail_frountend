@@ -20,6 +20,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UpdateProfileEvent>(_onUpdateProfile);
     on<LoginEvent>(_onLogin);
     on<LogoutEvent>(_onLogout);
+    on<RequestVerificationEvent>(_onRequestVerification);
+
   }
 
   Future<void> _onSendOtp(SendOtpEvent event, Emitter<UserState> emit) async {
@@ -35,8 +37,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UserLoading());
     final result = await authUseCases.verifyOtp(event.phone, event.otp);
     result.fold(
-          (failure) => emit(UserError(failure.message)),
-          (otpResult) => emit(OtpVerified(otpResult)),
+            (failure) => emit(UserError(failure.message)),
+          (otpResult) => add(LoginEvent(event.phone)), // then dispatch login
+
     );
   }
 
@@ -66,6 +69,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           (profile) => emit(LoginSuccess(profile)),
     );
   }
+
+  Future<void> _onRequestVerification(
+      RequestVerificationEvent event,
+      Emitter<UserState> emit,
+      ) async {
+    emit(UserLoading());
+    final result = await profileUseCases.requestVerification(
+      idProof: event.idProof,
+      note: event.note,
+    );
+    result.fold(
+          (failure) => emit(UserError(failure.message)),
+          (_) => emit(VerificationSubmittedState()),
+    );
+  }
+
 
   Future<void> _onLogout(LogoutEvent event, Emitter<UserState> emit) async {
     emit(UserLoading());

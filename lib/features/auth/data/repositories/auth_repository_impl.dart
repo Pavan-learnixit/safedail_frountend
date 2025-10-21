@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:injectable/injectable.dart';
+import 'package:dio/dio.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/utils/logger.dart';
@@ -90,6 +93,25 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(Failure("Failed to fetch profile: $e"));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> requestVerification({
+    required File idProof,
+    required String note,
+  }) async {
+    try {
+      // Simulate network delay
+      await Future.delayed(Duration(seconds: 2));
+
+      // ✅ Return mock success
+      return Right(null);
+    } catch (e) {
+      return Left(Failure('Exception: ${e.toString()}'));
+    }
+  }
+
+
+
 
 
 }

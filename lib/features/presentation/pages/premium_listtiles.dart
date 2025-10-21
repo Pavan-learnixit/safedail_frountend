@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-class premium_listtiles extends StatelessWidget {
-  premium_listtiles({super.key});
-  List<String> features = [
+
+class PremiumListTiles extends StatelessWidget {
+  PremiumListTiles({super.key});
+
+  final List<String> features = [
     "Advanced Spam Blocking",
     "Verification Badge",
     "Fraud Insurance*",
@@ -12,59 +14,65 @@ class premium_listtiles extends StatelessWidget {
     "Contact Requests",
     "Incognito Mode",
     "Family Sharing (up to 4 accounts)",
-    "ghost call",
-    "premium Badge",
-    "live Chat Support"
+    "Ghost Call",
+    "Premium Badge",
+    "Live Chat Support"
   ];
-  List<IconData> featureIcons = [
-    Icons.block, // Advanced Spam Blocking
-    Icons.verified, // Verification Badge
-    Icons.security, // Fraud Insurance*
-    Icons.mic, // Call Recording
-    Icons.record_voice_over, // Truecaller Assistant
-    Icons.visibility, // Who Viewed My Profile
-    Icons.search, // Who Searched For Me
-    Icons.contact_mail, // Contact Requests
-    Icons.visibility_off, // Incognito Mode
-    Icons.group, // Family Sharing
-    Icons.call, // Ghost Call
-    Icons.star, // Premium Badge
-    Icons.chat, // Live Chat Support
+
+  final List<IconData> featureIcons = [
+    Icons.block,
+    Icons.verified,
+    Icons.security,
+    Icons.mic,
+    Icons.record_voice_over,
+    Icons.visibility,
+    Icons.search,
+    Icons.contact_mail,
+    Icons.visibility_off,
+    Icons.group,
+    Icons.call,
+    Icons.star,
+    Icons.chat,
   ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return SafeArea(
-        child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: features.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 2,
-                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        child: ListTile(
-                          leading: Icon(featureIcons[index], color: Colors.blueAccent),
-                          title: Text(
-                            features[index],
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            // Show more details or upgrade action
-                          },
-                        ),
-                      );
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: features.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 2,
+                  color: colorScheme.surface,
+                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  child: ListTile(
+                    leading: Icon(featureIcons[index], color: colorScheme.primary),
+                    title: Text(
+                      features[index],
+                      style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    trailing: Icon(Icons.keyboard_arrow_right, color: colorScheme.onSurface),
+                    onTap: () {
+                      // Show more details or upgrade action
                     },
                   ),
-                ]
-            )
-        )
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
