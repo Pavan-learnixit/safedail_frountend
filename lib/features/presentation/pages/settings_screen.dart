@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:truecaller_clone/features/presentation/pages/privacy_center_page.dart';
 import 'package:truecaller_clone/features/presentation/pages/update_profile_page.dart';
 import 'GetVerificationScreen.dart';
+import 'about_safedial_screen.dart';
+import 'block_screen.dart';
 import 'help_screen.dart';
 class SettingsScreen extends StatelessWidget {
   final List<SettingItem> settings = [
@@ -61,6 +64,30 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const HelpScreen()),
+                  );
+                  break;
+                case 'Privacy Center':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => PrivacyCenterPage()),
+                  );
+                  break;
+                case 'About Safedial':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AboutSafedialScreen()),
+                  );
+                  break;
+                case 'Help':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => HelpScreen()),
+                  );
+                  break;
+                case 'Block':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => BlockingScreen()),
                   );
                   break;
                 default:
