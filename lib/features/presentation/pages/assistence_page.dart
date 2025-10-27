@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:truecaller_clone/features/presentation/pages/profile_page.dart';
 import 'package:truecaller_clone/features/presentation/widgets/search_bar.dart';
 
+import 'call_logs_page.dart';
+
 
 
 class AssistantancePage extends StatefulWidget {
@@ -51,7 +53,7 @@ class _AssistantancePageState extends State<AssistantancePage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                buildSearchBar(controller: searchController, suffixOnPressed: () {  }, prefixOnPressed: () {
+                buildSearchBar(controller: searchController, suffixOnPressed: () { Navigator.push(context, MaterialPageRoute(builder: (_)=>CallLogsPage()));}, prefixOnPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
                 }, onSubmitted: (value) {  },height: 60),
           
