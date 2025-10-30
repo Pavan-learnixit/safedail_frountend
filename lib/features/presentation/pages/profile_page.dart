@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:truecaller_clone/features/presentation/pages/profile_module_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/settings_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/update_profile_page.dart';
+import 'package:truecaller_clone/features/presentation/pages/who_searched_me_screen.dart';
+import 'package:truecaller_clone/features/presentation/pages/who_viewed_me_screen.dart';
 import 'connect_withus_screen.dart';
+import 'fraud_insurance_screen.dart';
 import 'help_screen.dart';
 import 'invite_friends_screen.dart';
+import 'manage_blockings_screen.dart';
 import 'theme_selection_screen.dart';
 import 'GetVerificationScreen.dart';
 import 'government_services_screen.dart';
@@ -260,6 +265,26 @@ class ProfilePage extends StatelessWidget {
             ? () => Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const ConnectWithUsScreen()),
+        )
+            : title == "Fraud Insurance"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const FraudInsuranceScreen()),
+        )
+            : title == "Manage blocking"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ManageBlockingsScreen()),
+        )
+            : title == "Who searched for me"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const WhoSearchedMeScreen()),
+        )
+            : title == "Who viewed my profile"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const WhoViewedMeScreen()),
         )
             : null,
       );
