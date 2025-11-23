@@ -10,7 +10,7 @@ import '../../domain/entities/signup_response.dart';
 @injectable
 class ApiService {
   static const String baseUrl =
-      "https://backend-safedail-285949452548.asia-south1.run.app";
+      "https://backend-safedail-285949452548.asia-south1.run.app/api/v1";
 
   Future<http.Response> sendOtp(String phoneNumber) async {
     final url = Uri.parse("$baseUrl/sendotp");
