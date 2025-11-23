@@ -5,6 +5,7 @@ import 'package:truecaller_clone/features/presentation/pages/calls_screen.dart';
 
 import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
 
+import '../pages/call_logs_page.dart';
 import '../pages/message_screen.dart';
 
 import 'package:truecaller_clone/features/presentation/pages/default_sms_page.dart';
@@ -22,7 +23,7 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
 
   // Screens for each tab
   final List<Widget> _screens = [
-    // const CallsScreen(),
+    CallsScreen(),
     // Container(),
     MessagesScreen(),
     // Container(),

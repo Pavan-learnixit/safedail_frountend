@@ -4,6 +4,7 @@ import 'package:truecaller_clone/features/presentation/pages/update_profile_page
 import 'GetVerificationScreen.dart';
 import 'about_safedial_screen.dart';
 import 'block_screen.dart';
+import 'calls_screen.dart';
 import 'help_screen.dart';
 class SettingsScreen extends StatelessWidget {
   final List<SettingItem> settings = [
@@ -88,6 +89,34 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => BlockingScreen()),
+                  );
+                case 'Assistant':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const PlaceholderPage(
+                            title: "Assistant page")),
+                  );
+                case 'Safedial for Wear OS':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const PlaceholderPage(
+                            title: "Safedial for Wear OS")),
+                  );
+                case 'Calls':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const PlaceholderPage(
+                            title: "Calls page")),
+                  );
+                case 'Messaging':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const PlaceholderPage(
+                            title: "Messaging page")),
                   );
                   break;
                 default:

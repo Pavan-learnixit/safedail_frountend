@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
 
 class BlockingScreen extends StatefulWidget {
   const BlockingScreen({super.key});
@@ -181,7 +182,12 @@ class _BlockingScreenState extends State<BlockingScreen> {
           ElevatedButton.icon(
             icon: Icon(Icons.crop),
             label: Text("Get Premium"),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PremiumScreen()),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
