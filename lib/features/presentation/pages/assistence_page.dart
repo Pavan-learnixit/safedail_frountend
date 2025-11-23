@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/profile_page.dart';
 import 'package:truecaller_clone/features/presentation/widgets/search_bar.dart';
 
@@ -96,7 +97,12 @@ class _AssistantancePageState extends State<AssistantancePage> {
                           Text('Upgrade to Premium to allow the Assistant to answer incoming calls for you'),
                           SizedBox(height: 10),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const PremiumScreen()),
+                              );
+                            },
                             child: Text('Upgrade'),
                           ),
                         ],

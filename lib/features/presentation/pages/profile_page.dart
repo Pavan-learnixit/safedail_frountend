@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/profile_module_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/settings_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/update_profile_page.dart';
 import 'package:truecaller_clone/features/presentation/pages/who_searched_me_screen.dart';
 import 'package:truecaller_clone/features/presentation/pages/who_viewed_me_screen.dart';
+import 'calls_screen.dart';
 import 'connect_withus_screen.dart';
 import 'fraud_insurance_screen.dart';
 import 'help_screen.dart';
@@ -129,7 +131,12 @@ class ProfilePage extends StatelessWidget {
                   const Icon(Icons.workspace_premium, color: Colors.orange),
               title: const Text('Upgrade to Premium'),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PremiumScreen()),
+                );
+              },
             ),
           ),
 
@@ -245,6 +252,41 @@ class ProfilePage extends StatelessWidget {
             ? () => Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const ThemeSelectionScreen()),
+        )
+            : title == "Safedial for Wear OS"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => const PlaceholderPage(
+                  title: "Safedial for Wear OS")),
+        )
+            : title == "Inbox cleaner"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => const PlaceholderPage(
+                  title: "Inbox cleaner")),
+        )
+            : title == "Family safety"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => const PlaceholderPage(
+                  title: "Family safety")),
+        )
+            : title == "Safedial news"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => const PlaceholderPage(
+                  title: "Safedial news")),
+        )
+            : title == "Contact requests"
+            ? () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => const PlaceholderPage(
+                  title: "Contact requests")),
         )
             : title == "Government Services"
             ? () => Navigator.push(
