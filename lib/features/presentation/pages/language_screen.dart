@@ -107,7 +107,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               Text(
                 AppLocalizations.of(context)!.welcomeText,
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.normal),
+                    color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.normal),
               ),
               SizedBox(
                 height: 20,

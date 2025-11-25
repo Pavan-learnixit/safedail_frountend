@@ -20,14 +20,15 @@ class _BlockingScreenState extends State<BlockingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Block"),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        title: const Text("Block"),
+        backgroundColor: theme.colorScheme.surface,
+        foregroundColor: theme.colorScheme.onSurface,
         elevation: 0,
       ),
-      body: ListView(
+        body: ListView(
         padding: EdgeInsets.all(16),
         children: [
           _buildProtectionLevel(),

@@ -6,8 +6,9 @@ class BackupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -26,14 +27,14 @@ class BackupScreen extends StatelessWidget {
                     Positioned(
                       top: 0,
                       child: Image.asset(
-                        'assets/drive.png', // 🔵 Google Drive logo
+                        'assets/drive.png',
                         height: 60,
                       ),
                     ),
                     Positioned(
                       bottom: 0,
                       child: Image.asset(
-                        'assets/call.png', // 🔵 Phone logo
+                        'assets/call.png',
                         height: 60,
                       ),
                     ),
@@ -41,34 +42,37 @@ class BackupScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
 
-                const Text(
+                Text(
                   'Backup available',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
+                Text(
                   'Restore settings, call history, contacts, messages,\nmedia, block list and call recordings, to continue\nwhere you left off.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14),
+                  style: theme.textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 16),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 6, horizontal: 12),
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
+                    color: theme.colorScheme.secondaryContainer,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Backup found (01/07/2025, 11:53)',
-                    style: TextStyle(fontSize: 13),
+                    style: theme.textTheme.bodySmall,
                   ),
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: theme.colorScheme.primary,
+                    foregroundColor: theme.colorScheme.onPrimary,
                     minimumSize: const Size(double.infinity, 48),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -76,19 +80,23 @@ class BackupScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Restore',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>PremiumScreen()), (Route<dynamic> route)=> false );
-
-
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const PremiumScreen()),
+                          (Route<dynamic> route) => false,
+                    );
                   },
-                  child: const Text(
+                  child: Text(
                     'Skip',
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
               ],

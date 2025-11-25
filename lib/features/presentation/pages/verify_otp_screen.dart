@@ -190,7 +190,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                               ? const CircularProgressIndicator()
                               : Text(
                             widget.isSignupFlow ? "Verify & Create Account" : "Verify OTP",
-                            style: textTheme.titleMedium?.copyWith(color: colorScheme.onPrimary),
+                            style: textTheme.titleMedium,
                           ),
                         );
                       },

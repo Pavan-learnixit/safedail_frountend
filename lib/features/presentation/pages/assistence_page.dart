@@ -56,7 +56,7 @@ class _AssistantancePageState extends State<AssistantancePage> {
               children: [
                 buildSearchBar(controller: searchController, suffixOnPressed: () { Navigator.push(context, MaterialPageRoute(builder: (_)=>CallLogsPage()));}, prefixOnPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
-                }, onSubmitted: (value) {  },height: 60),
+                }, onSubmitted: (value) {  },height: 60, context: context),
           
                 ListTile(
                   title: Text('Assistant status'),
