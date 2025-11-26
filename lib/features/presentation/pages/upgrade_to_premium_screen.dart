@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:truecaller_clone/features/presentation/widgets/custom_bottom_navigation.dart';
 
+import 'calls_screen.dart';
+
 class PremiumScreen extends StatelessWidget {
   const PremiumScreen({super.key});
 
@@ -139,8 +141,11 @@ class PremiumScreen extends StatelessWidget {
                       //more plans link
                       TextButton(
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('More plans tapped!')),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const PlaceholderPage(
+                                    title: "More plans ")),
                           );
                         },
                         child: const Text(

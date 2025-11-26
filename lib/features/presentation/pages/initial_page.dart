@@ -43,7 +43,7 @@ class _InitialPageState extends State<InitialPage> {
                 Text(
                   AppLocalizations.of(context)!.knowText,
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                      color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 30,

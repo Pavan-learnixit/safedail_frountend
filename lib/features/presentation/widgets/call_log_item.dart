@@ -71,11 +71,18 @@ class CallLogItem extends StatelessWidget {
   }
 
   String _initials(String name) {
-    final parts = name.split(' ');
-    if (parts.isEmpty) return '';
-    if (parts.length == 1) return parts[0][0];
-    return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+    if (name.isEmpty) return '?'; // fallback initial
+    final parts = name.trim().split(RegExp(r'\s+')); // split on whitespace
+    if (parts.isEmpty) return '?';
+    if (parts.length == 1) {
+      return parts[0].isNotEmpty ? parts[0][0].toUpperCase() : '?';
+    }
+    final first = parts[0].isNotEmpty ? parts[0][0] : '';
+    final second = parts[1].isNotEmpty ? parts[1][0] : '';
+    final initials = '$first$second'.trim();
+    return initials.isEmpty ? '?' : initials.toUpperCase();
   }
+
 
   String _durationText(int sec) {
     if (sec <= 0) return '0s';

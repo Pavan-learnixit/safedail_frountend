@@ -20,40 +20,45 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(color: Colors.black),
-        title: const Text(
+        leading: BackButton(color: theme.colorScheme.onSurface),
+        title: Text(
           'Pavan Umarani',
-          style: TextStyle(color: Colors.black),
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: theme.colorScheme.onSurface,
+          ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: theme.colorScheme.surface,
         elevation: 0,
         actions: [
           Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => SettingsScreen()));
-                  },
-                  icon: Icon(
-                    Icons.settings,
-                    color: Colors.black,
-                  ))
-              //Icon(Icons.settings, color: Colors.black),
-              )
+            padding: const EdgeInsets.only(right: 16),
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => SettingsScreen()),
+                );
+              },
+              icon: Icon(Icons.settings, color: theme.colorScheme.onSurface),
+            ),
+          )
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.background,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
-          const Center(
+          Center(
             child: Text(
               '081231 83143',
-              style: TextStyle(color: Colors.grey),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onBackground.withOpacity(0.7),
+              ),
             ),
           ),
           const SizedBox(height: 20),
@@ -69,20 +74,20 @@ class ProfilePage extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: 0.8,
                     strokeWidth: 6,
-                    backgroundColor: Colors.grey.shade300,
-                    valueColor: const AlwaysStoppedAnimation(Colors.blue),
+                    backgroundColor: theme.colorScheme.outline.withOpacity(0.3),
+                    valueColor: AlwaysStoppedAnimation(theme.colorScheme.primary),
                   ),
                 ),
-                const Icon(Icons.add_a_photo,
-                    color: Colors.blue, size: 40), // Placeholder image
+                Icon(Icons.add_a_photo,
+                    color: theme.colorScheme.primary, size: 40),
               ],
             ),
           ),
           const SizedBox(height: 8),
-          const Center(
+          Center(
             child: Text(
               '📷 Add profile picture to get 100%',
-              style: TextStyle(fontSize: 14),
+              style: theme.textTheme.bodySmall,
             ),
           ),
           const SizedBox(height: 16),
@@ -94,12 +99,16 @@ class ProfilePage extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const UpdateProfilePage()));
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const UpdateProfilePage()),
+                    );
                   },
                   icon: const Icon(Icons.edit),
                   label: const Text("Edit profile"),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -114,8 +123,8 @@ class ProfilePage extends StatelessWidget {
                   icon: const Icon(Icons.verified_user_outlined),
                   label: const Text("Get verified"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
+                    backgroundColor: theme.colorScheme.primary,
+                    foregroundColor: theme.colorScheme.onPrimary,
                   ),
                 ),
               )
@@ -127,10 +136,12 @@ class ProfilePage extends StatelessWidget {
           // Upgrade to premium
           Card(
             child: ListTile(
-              leading:
-                  const Icon(Icons.workspace_premium, color: Colors.orange),
-              title: const Text('Upgrade to Premium'),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              leading: Icon(Icons.workspace_premium,
+                  color: theme.colorScheme.secondary),
+              title: Text('Upgrade to Premium',
+                  style: theme.textTheme.bodyMedium),
+              trailing: Icon(Icons.arrow_forward_ios,
+                  size: 16, color: theme.colorScheme.onSurface),
               onTap: () {
                 Navigator.push(
                   context,
@@ -145,17 +156,18 @@ class ProfilePage extends StatelessWidget {
           // Last 30 days stats
           Card(
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       Text('Last 30 days',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Spacer(),
-                      Icon(Icons.share),
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.bold)),
+                      const Spacer(),
+                      Icon(Icons.share, color: theme.colorScheme.onSurface),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -164,10 +176,13 @@ class ProfilePage extends StatelessWidget {
                     spacing: 32,
                     runSpacing: 16,
                     children: [
-                      _buildStatItem(Icons.shield, "14", "Spam calls"),
-                      _buildStatItem(Icons.access_time, "6m 51s", "Time saved"),
-                      _buildStatItem(Icons.search, "224", "Unknown calls"),
-                      _buildStatItem(Icons.message, "65", "Messages spam"),
+                      _buildStatItem(theme, Icons.shield, "14", "Spam calls"),
+                      _buildStatItem(
+                          theme, Icons.access_time, "6m 51s", "Time saved"),
+                      _buildStatItem(
+                          theme, Icons.search, "224", "Unknown calls"),
+                      _buildStatItem(
+                          theme, Icons.message, "65", "Messages spam"),
                     ],
                   ),
                 ],
@@ -177,44 +192,47 @@ class ProfilePage extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Feature List
           const Divider(),
-          ..._buildFeatureList(context),
+          ..._buildFeatureList(context, theme),
         ],
       ),
     );
   }
 
-  Widget _buildStatItem(IconData icon, String value, String label) {
+  Widget _buildStatItem(
+      ThemeData theme, IconData icon, String value, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: Colors.blue),
+        Icon(icon, color: theme.colorScheme.primary),
         const SizedBox(height: 4),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
+        Text(value,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            )),
         Text(label,
-            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+            textAlign: TextAlign.center, style: theme.textTheme.bodySmall),
       ],
     );
   }
 
-  List<Widget> _buildFeatureList(BuildContext context) {
+  List<Widget> _buildFeatureList(BuildContext context, ThemeData theme) {
     final features = [
-      ["Manage blocking", Icons.block, Colors.red],
-      ["Safedial for Wear OS", Icons.watch, Colors.green],
-      ["Inbox cleaner", Icons.cleaning_services, Colors.green],
-      ["Fraud Insurance", Icons.verified_user, Colors.blue],
-      ["Who viewed my profile", Icons.remove_red_eye, Colors.orange],
-      ["Who searched for me", Icons.person_search, Colors.purple],
-      ["Contact requests", Icons.contact_page, Colors.blue],
-      ["Change theme", Icons.palette, Colors.grey],
-      ["Government Services", Icons.account_balance, Colors.black87],
-      ["Family safety", Icons.spa, Colors.green],
-      ["Community", Icons.handshake, Colors.black87],
-      ["Invite friends", Icons.send, Colors.black87],
-      ["Safedial news", Icons.book, Colors.black87],
-      ["Connect with us", Icons.support_agent, Colors.teal],
-      ["Help", Icons.help_outline, Colors.black87],
+      ["Manage blocking", Icons.block, theme.colorScheme.error],
+      ["Safedial for Wear OS", Icons.watch, theme.colorScheme.primary],
+      ["Inbox cleaner", Icons.cleaning_services, theme.colorScheme.primary],
+      ["Fraud Insurance", Icons.verified_user, theme.colorScheme.primary],
+      ["Who viewed my profile", Icons.remove_red_eye, theme.colorScheme.secondary],
+      ["Who searched for me", Icons.person_search, theme.colorScheme.secondary],
+      ["Contact requests", Icons.contact_page, theme.colorScheme.primary],
+      ["Change theme", Icons.palette, theme.colorScheme.onSurface],
+      ["Government Services", Icons.account_balance, theme.colorScheme.onSurface],
+      ["Family safety", Icons.spa, theme.colorScheme.primary],
+      ["Community", Icons.handshake, theme.colorScheme.onSurface],
+      ["Invite friends", Icons.send, theme.colorScheme.onSurface],
+      ["Safedial news", Icons.book, theme.colorScheme.onSurface],
+      ["Connect with us", Icons.support_agent, theme.colorScheme.primary],
+      ["Help", Icons.help_outline, theme.colorScheme.onSurface],
     ];
 
     return features.map((item) {
@@ -331,6 +349,5 @@ class ProfilePage extends StatelessWidget {
             : null,
       );
     }).toList();
-
   }
 }

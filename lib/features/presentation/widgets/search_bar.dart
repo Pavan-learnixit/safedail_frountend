@@ -1,31 +1,43 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Widget buildSearchBar({
-  double? height=50,
+  double height = 50,
   required TextEditingController controller,
   required void Function()? suffixOnPressed,
   required void Function()? prefixOnPressed,
-  required void Function(String)? onSubmitted
+  required void Function(String)? onSubmitted,
+  required BuildContext context,
 }) {
+  final theme = Theme.of(context);
+
   return Material(
     elevation: 10,
+    color: theme.colorScheme.surface, // background adapts
+    borderRadius: BorderRadius.circular(8),
     child: Container(
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
-          IconButton( color: Colors.grey, onPressed: prefixOnPressed, icon: Icon(Icons.person),),
+          IconButton(
+            color: theme.colorScheme.onSurfaceVariant,
+            onPressed: prefixOnPressed,
+            icon: const Icon(Icons.person),
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: TextField(
               controller: controller,
-              decoration: const InputDecoration(
+              style: theme.textTheme.bodyMedium, // text adapts
+              decoration: InputDecoration(
                 hintText: 'Search...',
+                hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.hintColor,
+                ),
                 border: InputBorder.none,
                 isDense: true,
               ),
@@ -33,7 +45,8 @@ Widget buildSearchBar({
             ),
           ),
           IconButton(
-            icon: Icon(Icons.more_vert),
+            color: theme.colorScheme.onSurfaceVariant,
+            icon: const Icon(Icons.more_vert),
             onPressed: suffixOnPressed,
           ),
         ],

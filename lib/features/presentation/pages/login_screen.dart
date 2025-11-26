@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/user_bloc.dart';
 import 'package:truecaller_clone/features/presentation/bloc/user_events.dart';
@@ -92,7 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextField(
                   controller: phoneController,
                   maxLength: 10,
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.number, // better than phone for digits only
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly, // restricts to numbers
+                  ],
                   decoration: InputDecoration(
                     hintText: "Phone Number",
                     counterText: "",

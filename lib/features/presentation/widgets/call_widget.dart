@@ -26,7 +26,7 @@ class CallWidget extends StatelessWidget {
         Stack(
           children: [
             CircleAvatar(
-              radius: 40,
+              radius: 35,
               backgroundColor: (isFraud??false)?Colors.red.shade100:null,
               child: Center(
                 child: (isFraud??false) ?
