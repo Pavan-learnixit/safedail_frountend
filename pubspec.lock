@@ -125,10 +125,10 @@ packages:
     dependency: "direct main"
     description:
       name: call_log
-      sha256: "943fdc3cd1b2a395633817f4b66267c93accb38d359da4d95db1e389f8f898d6"
+      sha256: "6ad3e241efa2bc82febc537fe11112a62c94eb5db826bd532500574ba34a78a2"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "6.0.1"
   characters:
     dependency: transitive
     description:
