@@ -69,15 +69,29 @@ class _MyAppState extends State<MyApp> {
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Truecaller Clone',
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
-            themeMode: themeState.themeMode,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.blue,
+                brightness: Brightness.light,
+              ),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.blue,
+                brightness: Brightness.dark,
+              ),
+              useMaterial3: true,
+            ),
+            themeMode: themeState.themeMode, // controlled by your ThemeBloc
             home: const LanguageScreen(),
             locale: _locale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
           );
+
         },
       ),
     );
