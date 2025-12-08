@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:truecaller_clone/features/presentation/pages/profile_page.dart';
-import 'package:truecaller_clone/features/presentation/widgets/search_bar.dart';
 import 'package:truecaller_clone/features/presentation/widgets/call_widget.dart';
-
 import '../../auth/data/repositories/call_logs_repository.dart';
 import '../bloc/call_logs_bloc.dart';
 import '../bloc/call_logs_event.dart';
 import '../bloc/call_logs_state.dart';
-import 'call_logs_page.dart';
-import 'contacts_page.dart';
-
+import '../widgets/call_screen_bottombar.dart';
 class CallsScreen extends StatelessWidget {
   const CallsScreen({super.key});
 
@@ -27,7 +23,6 @@ class CallsScreen extends StatelessWidget {
     );
   }
 }
-
 class CallsView extends StatefulWidget {
   const CallsView({super.key});
 
@@ -38,7 +33,7 @@ class CallsView extends StatefulWidget {
 class _CallsViewState extends State<CallsView> {
   TextEditingController searchController = TextEditingController();
   bool isEnabled = true;
-
+  bool _showBottomBar = true;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -49,111 +44,124 @@ class _CallsViewState extends State<CallsView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              buildSearchBar(
-                context: context,
-                controller: searchController,
-                suffixOnPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const CallLogsPage()),
-                  );
-                },
-                prefixOnPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ProfilePage()),
-                  );
-                },
-                onSubmitted: (value) {},
-                height: 60,
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buttons(
-                    theme: theme,
-                    icon: Icons.contact_phone,
-                    text: "Contacts",
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const ContactsPage()),
-                      );
-                    },
-                  ),
-                  _buttons(
-                    theme: theme,
-                    icon: Icons.favorite,
-                    text: "Favorites",
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                            const PlaceholderPage(title: "Favorites Page")),
-                      );
-                    },
-                  ),
-                  _buttons(
-                    theme: theme,
-                    icon: Icons.whatshot,
-                    text: "Voice HD",
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                            const PlaceholderPage(title: "Voice HD Page")),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
+              // buildSearchBar(
+              //   context: context,
+              //   controller: searchController,
+              //   suffixOnPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(builder: (_) => const CallLogsPage()),
+              //     );
+              //   },
+              //   prefixOnPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(builder: (_) => const ProfilePage()),
+              //     );
+              //   },
+              //   onSubmitted: (value) {},
+              //   height: 60,
+              // ),
+              // const SizedBox(height: 10),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     _buttons(
+              //       theme: theme,
+              //       icon: Icons.contact_phone,
+              //       text: "Contacts",
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (_) => const ContactsPage()),
+              //         );
+              //       },
+              //     ),
+              //     _buttons(
+              //       theme: theme,
+              //       icon: Icons.favorite,
+              //       text: "Favorites",
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (_) =>
+              //               const PlaceholderPage(title: "Favorites Page")),
+              //         );
+              //       },
+              //     ),
+              //     _buttons(
+              //       theme: theme,
+              //       icon: Icons.whatshot,
+              //       text: "Voice HD",
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (_) =>
+              //               const PlaceholderPage(title: "Voice HD Page")),
+              //         );
+              //       },
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 20),
               if (isEnabled) customCard(theme),
               if (isEnabled) const SizedBox(height: 10),
-
               Expanded(
-                child: BlocBuilder<CallLogsBloc, CallLogsState>(
-                  builder: (context, state) {
-                    if (state is CallLogsLoading || state is CallLogsInitial) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is CallLogsEmpty) {
-                      return const Center(child: Text("No call logs"));
-                    } else if (state is CallLogsError) {
-                      return Center(child: Text("Error: ${state.message}"));
-                    } else if (state is CallLogsLoaded) {
-                      return ListView.separated(
-                        itemCount: state.callLogs.length,
-                        separatorBuilder: (_, __) => const Divider(height: 15),
-                        itemBuilder: (context, index) {
-                          final log = state.callLogs[index];
-                          final name = log.name;
-                          final char =
-                          name.isNotEmpty ? name[0].toUpperCase() : '?';
-                          final duration = "${log.durationSeconds}s";
-                          final time =
-                          TimeOfDay.fromDateTime(log.time).format(context);
-
-                          return CallWidget(
-                            char: char,
-                            label: duration,
-                            name: name,
-                            time: time,
-                            isFraud: name.toLowerCase().contains("spam"),
-                            onCallPressed: () {
-                              // TODO: implement call action
-                            },
-                          );
-                        },
-                      );
-                    } else {
-                      return const SizedBox.shrink();
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    if (notification is UserScrollNotification) {
+                      if (notification.direction == ScrollDirection.reverse) {
+                        if (_showBottomBar) setState(() => _showBottomBar = false);
+                      } else if (notification.direction == ScrollDirection.forward) {
+                        if (!_showBottomBar) setState(() => _showBottomBar = true);
+                      }
                     }
+                    return false; // allow scroll events to continue
                   },
+                  child: BlocBuilder<CallLogsBloc, CallLogsState>(
+                    builder: (context, state) {
+                      if (state is CallLogsLoading || state is CallLogsInitial) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is CallLogsEmpty) {
+                        return const Center(child: Text("No call logs"));
+                      } else if (state is CallLogsError) {
+                        return Center(child: Text("Error: ${state.message}"));
+                      } else if (state is CallLogsLoaded) {
+                        return ListView.builder(
+                          itemCount: state.callLogs.length,
+                          itemBuilder: (context, index) {
+                            final log = state.callLogs[index];
+                            final name = log.name;
+                            final char = name.isNotEmpty ? name[0].toUpperCase() : '?';
+                            final duration = "${log.durationSeconds}s";
+                            final time = TimeOfDay.fromDateTime(log.time).format(context);
+
+                            return CallWidget(
+                              char: char,
+                              label: duration,
+                              name: name,
+                              time: time,
+                              isFraud: name.toLowerCase().contains("spam"),
+                              onCallPressed: () {
+                                // TODO: implement call action
+                              },
+                            );
+                          },
+                        );
+                        ;
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
                 ),
+              ),
+              CallScreenBottomBar(
+                showBottomBar: _showBottomBar,
+                theme: theme,
               ),
             ],
           ),

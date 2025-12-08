@@ -56,175 +56,220 @@ class _SignupScreenState extends State<SignupScreen> {
 
     return InputDecoration(
       hintText: hint,
+      hintStyle: const TextStyle(color: Colors.white),
       counterText: "",
       prefixText: prefixText,
       errorText: errorText,
-      filled: true,
-      fillColor: colorScheme.surfaceVariant,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(13),
-        borderSide: BorderSide.none,
+      border: const UnderlineInputBorder(),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorScheme.primary, width: 2),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      prefixIcon: Icon(icon, color: colorScheme.onSurfaceVariant),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.white70, width: 1),
+      ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 12),
+      prefixIcon: Icon(icon, color: Colors.white70),
     );
   }
+
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Signup',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
+      // extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   title: const Text(
+      //     'Signup',
+      //     style: TextStyle(
+      //       fontWeight: FontWeight.w300,
+      //       color: Colors.white,
+      //       fontSize: 40
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      //   elevation: 0,
+      //   backgroundColor: Colors.transparent,
+      //   foregroundColor: Colors.white,
+      // ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: RadialGradient(
+            colors: [
+              Color(0xFFBBDEFB),
+              Color(0xFF1976D2),
+              Color(0xFF0B1A4A),
+            ],
+            center: Alignment.topCenter,
+            radius: 1.2,
+          ),
         ),
-        centerTitle: false,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.onBackground,
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-
-      body: SafeArea(
-        child: BlocListener<UserBloc, UserState>(
-          listener: (context, state) {
-            if (state is OtpSent|| state is OtpVerified) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("OTP sent successfully")),
-              );
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<UserBloc>(),
-                    child: VerifyOtpScreen(
-                      phoneNumber: phoneController.text.trim(),
-                      isSignupFlow: true,
-                      userDetails: {
-                        "name": "${firstNameController.text.trim()} ${lastNameController.text.trim()}",
-                        "email": emailController.text.trim(),
-                        "phoneNumber": phoneController.text.trim(),
-                        "password": "dummy-password",
-                      },
+        child: SafeArea(
+          child: BlocListener<UserBloc, UserState>(
+            listener: (context, state) {
+              if (state is OtpSent|| state is OtpVerified) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("OTP sent successfully")),
+                );
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider.value(
+                      value: context.read<UserBloc>(),
+                      child: VerifyOtpScreen(
+                        phoneNumber: phoneController.text.trim(),
+                        isSignupFlow: true,
+                        userDetails: {
+                          "name": "${firstNameController.text.trim()} ${lastNameController.text.trim()}",
+                          "email": emailController.text.trim(),
+                          "phoneNumber": phoneController.text.trim(),
+                          "password": "dummy-password",
+                        },
+                      ),
                     ),
                   ),
-                ),
-              );
-            } else if (state is UserError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
-            }
-          },
-          child: SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      child: Image.asset("assets/images/signupimage.png", fit: BoxFit.cover),
-                    ),
-                    Text("Create Account", style: Theme.of(context).textTheme.headlineSmall),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: firstNameController,
-                      decoration: customInput(
-                        hint: "First Name",
-                        icon: Icons.person,
-                        errorText: isFirstNameValid || firstNameController.text.isEmpty
-                            ? null
-                            : "Enter a valid name",
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          isFirstNameValid = controller.isValidName(value);
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: lastNameController,
-                      decoration: customInput(hint: "Last Name", icon: Icons.person_outline),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: emailController,
-                      decoration: customInput(
-                        hint: "Email",
-                        icon: Icons.email,
-                        errorText: isEmailValid || emailController.text.isEmpty ? null : "Enter a valid email",
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          isEmailValid = controller.isValidEmail(value);
-                        });
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller: phoneController,
-                      maxLength: 10,
-                      keyboardType: TextInputType.phone,
-                      decoration: customInput(hint: "Phone Number", icon: Icons.phone, prefixText: '+91 '),
-                      onChanged: (value) {
-                        if (value.length > 10) {
-                          phoneController.text = value.substring(0, 10);
-                          phoneController.selection = TextSelection.fromPosition(
-                            TextPosition(offset: phoneController.text.length),
-                          );
-                        }
-                        setState(() {
-                          isPhoneValid = controller.isValidPhone(value);
-                        });
-                      },
-                    ),
-                    if (!isPhoneValid && phoneController.text.isNotEmpty)Text("Phone number must be 10 digits", style: TextStyle(color: Theme.of(context).colorScheme.error)),
-                    const SizedBox(height: 16),
-                    BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) {
-                        final isSendingOtp = state is UserLoading;
-                        return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade500,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                );
+              } else if (state is UserError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message)),
+                );
+              }
+            },
+            child: SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // SizedBox(
+                      //   width: double.infinity,
+                      //   height: MediaQuery.of(context).size.height * 0.35,
+                      //   child: Image.asset("assets/images/signupimage.png", fit: BoxFit.cover),
+                      // ),
+                      const SizedBox(height: kToolbarHeight + 24),
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundColor: Colors.transparent,
+                        child: ClipOval(
+                          child: Image.asset(
+                            "assets/images/signupimage2.jpeg",
+                            fit: BoxFit.cover,
+                            width: 120,
+                            height: 120,
                           ),
-                          onPressed: isSendingOtp ? null : () => controller.submit(context),
-                          child: isSendingOtp
-                              ? const CircularProgressIndicator(color: Colors.white)
-                              : const Text("Next", style: TextStyle(fontSize: 22, color: Colors.white)),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Already have an account? ", style: Theme.of(context).textTheme.bodyMedium),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => BlocProvider.value(
-                                  value: context.read<UserBloc>(),
-                                  child: const LoginScreen(),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Text("Login", style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          )),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      Text("SignUp", style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          color: Colors.white,
+                          fontSize: 30
+                      ), textAlign: TextAlign.center,),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                      Text("Create Account", style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 30
+                      ), textAlign: TextAlign.center,),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: firstNameController,
+                        decoration: customInput(
+                          hint: "First Name",
+                          icon: Icons.person,
+                          errorText: isFirstNameValid || firstNameController.text.isEmpty
+                              ? null
+                              : "Enter a valid name",
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            isFirstNameValid = controller.isValidName(value);
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: lastNameController,
+                        decoration: customInput(hint: "Last Name", icon: Icons.person_outline),
+                      ),
+                      const SizedBox(height: 16),
+                      // TextField(
+                      //   controller: emailController,
+                      //   decoration: customInput(
+                      //     hint: "Email",
+                      //     icon: Icons.email,
+                      //     errorText: isEmailValid || emailController.text.isEmpty ? null : "Enter a valid email",
+                      //   ),
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       isEmailValid = controller.isValidEmail(value);
+                      //     });
+                      //   },
+                      //   keyboardType: TextInputType.emailAddress,
+                      // ),
+                      // const SizedBox(height: 16),
+                      TextField(
+                        controller: phoneController,
+                        maxLength: 10,
+                        keyboardType: TextInputType.phone,
+                        decoration: customInput(hint: "Phone Number", icon: Icons.phone, prefixText: '+91 '),
+                        onChanged: (value) {
+                          if (value.length > 10) {
+                            phoneController.text = value.substring(0, 10);
+                            phoneController.selection = TextSelection.fromPosition(
+                              TextPosition(offset: phoneController.text.length),
+                            );
+                          }
+                          setState(() {
+                            isPhoneValid = controller.isValidPhone(value);
+                          });
+                        },
+                      ),
+                      if (!isPhoneValid && phoneController.text.isNotEmpty)Text("Phone number must be 10 digits", style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                      const SizedBox(height: 16),
+                      BlocBuilder<UserBloc, UserState>(
+                        builder: (context, state) {
+                          final isSendingOtp = state is UserLoading;
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue.shade500,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            ),
+                            onPressed: isSendingOtp ? null : () => controller.submit(context),
+                            child: isSendingOtp
+                                ? const CircularProgressIndicator(color: Colors.white)
+                                : const Text("Next", style: TextStyle(fontSize: 22, color: Colors.white)),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Already have an account? ", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white) ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                    value: context.read<UserBloc>(),
+                                    child: const LoginScreen(),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text("Login", style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
