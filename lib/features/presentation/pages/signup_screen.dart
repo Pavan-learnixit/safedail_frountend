@@ -176,6 +176,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 16),
                       TextField(
                         controller: firstNameController,
+                        style: const TextStyle(color: Colors.white),
                         decoration: customInput(
                           hint: "First Name",
                           icon: Icons.person,
@@ -192,26 +193,29 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 16),
                       TextField(
                         controller: lastNameController,
+                        style: const TextStyle(color: Colors.white),
                         decoration: customInput(hint: "Last Name", icon: Icons.person_outline),
                       ),
                       const SizedBox(height: 16),
-                      // TextField(
-                      //   controller: emailController,
-                      //   decoration: customInput(
-                      //     hint: "Email",
-                      //     icon: Icons.email,
-                      //     errorText: isEmailValid || emailController.text.isEmpty ? null : "Enter a valid email",
-                      //   ),
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       isEmailValid = controller.isValidEmail(value);
-                      //     });
-                      //   },
-                      //   keyboardType: TextInputType.emailAddress,
-                      // ),
-                      // const SizedBox(height: 16),
+                      TextField(
+                        controller: emailController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: customInput(
+                          hint: "Email",
+                          icon: Icons.email,
+                          errorText: isEmailValid || emailController.text.isEmpty ? null : "Enter a valid email",
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            isEmailValid = controller.isValidEmail(value);
+                          });
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 16),
                       TextField(
                         controller: phoneController,
+                        style: const TextStyle(color: Colors.white),
                         maxLength: 10,
                         keyboardType: TextInputType.phone,
                         decoration: customInput(hint: "Phone Number", icon: Icons.phone, prefixText: '+91 '),
