@@ -23,11 +23,11 @@ Widget buildSearchBar({
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
-          IconButton(
-            color: theme.colorScheme.onSurfaceVariant,
-            onPressed: prefixOnPressed,
-            icon: const Icon(Icons.person),
-          ),
+          // IconButton(
+          //   color: theme.colorScheme.onSurfaceVariant,
+          //   onPressed: prefixOnPressed,
+          //   icon: const Icon(Icons.person),
+          // ),
           const SizedBox(width: 8),
           Expanded(
             child: TextField(
@@ -46,7 +46,7 @@ Widget buildSearchBar({
           ),
           IconButton(
             color: theme.colorScheme.onSurfaceVariant,
-            icon: const Icon(Icons.more_vert),
+            icon: const Icon(Icons.search),
             onPressed: suffixOnPressed,
           ),
         ],
