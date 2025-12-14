@@ -96,6 +96,11 @@ flutter:
      - assets/images/verificationimage.png
      - assets/images/signupimage2.jpeg
      - assets/images/signupimage3.png
+     - assets/images/contactsimage.png
+     - assets/images/favoritesimage.png
+     - assets/images/mystatsimage.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
