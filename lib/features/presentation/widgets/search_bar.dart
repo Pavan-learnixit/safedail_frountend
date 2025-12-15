@@ -47,7 +47,7 @@ Widget buildSearchBar({
           IconButton(
             color: theme.colorScheme.onSurfaceVariant,
             icon: const Icon(Icons.search),
-            onPressed: suffixOnPressed,
+            onPressed: (){},// suffixOnPressed,
           ),
         ],
       ),

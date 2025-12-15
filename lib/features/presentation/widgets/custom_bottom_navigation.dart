@@ -2,24 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:truecaller_clone/features/presentation/pages/assistence_page.dart';
 import 'package:truecaller_clone/features/presentation/pages/calls_screen.dart';
-
 import 'package:truecaller_clone/features/presentation/pages/premium_screen.dart';
-
-import '../pages/call_logs_page.dart';
 import '../pages/message_screen.dart';
-
-import 'package:truecaller_clone/features/presentation/pages/default_sms_page.dart';
-
 import '../pages/block_screen.dart';
-
-
 class CustomBottomNaviaionBarScreen extends StatefulWidget {
   @override
   _BottomNavScreenState createState() => _BottomNavScreenState();
 }
-
 class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
   int _currentIndex = 0;
+  BottomNavigationBarItem _buildNavItem(IconData icon, String label, int index) {
+    bool isSelected = _currentIndex == index;
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return BottomNavigationBarItem(
+      icon: AnimatedContainer(
+        duration: const Duration(milliseconds: 120),
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isSelected ? Theme.of(context).colorScheme.primary : Colors.transparent,
+          border: isSelected
+              ? Border.all(
+            color: Colors.white,
+            width: 2,
+          )
+              : null,
+        ),
+        child: Icon(
+          icon,
+          size: isSelected ? 32 : 24,
+          color: isSelected ? Colors.white : Colors.grey,
+        ),
+      ),
+      label: label,
+    );
+  }
+
 
   // Screens for each tab
   final List<Widget> _screens = [
@@ -27,17 +47,15 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
     // Container(),
     MessagesScreen(),
     // Container(),
-
     // Container(),
-    //
     // DefaultSmsPage(),
     BlockingScreen(),
-    PremiumScreen(),
+    // PremiumScreen(),
+    PlaceholderPage(
+        title: "Premium page"),
     // Container(),
     AssistantancePage()
-
   ];
-
   // Titles for AppBar
   final List<String> _titles = [
     'Calls',
@@ -46,7 +64,6 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
     'Premium',
     'Assistant'
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,27 +104,14 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.call),
-            label: 'Calls',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Messages',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.block),
-            label: 'Blocking',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.workspace_premium),
-            label: 'Premium',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assistant),
-            label: 'Assistant',
-          ),
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        items: [
+          _buildNavItem(Icons.call, 'Calls', 0),
+          _buildNavItem(Icons.message, 'Messages', 1),
+          _buildNavItem(Icons.block, 'Blocking', 2),
+          _buildNavItem(Icons.workspace_premium, 'Premium', 3),
+          _buildNavItem(Icons.assistant, 'Assistant', 4),
         ],
       ),
     );
@@ -122,10 +126,9 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Row(
           children: [
-            IconButton( color: Colors.grey, onPressed: () {  }, icon: Icon(Icons.person),),
             const SizedBox(width: 8),
             Expanded(
               child: TextField(
@@ -134,21 +137,11 @@ class _BottomNavScreenState extends State<CustomBottomNaviaionBarScreen> {
                   border: InputBorder.none,
                   isDense: true,
                 ),
-                onSubmitted: (value) {
-                  // Handle search input
-                },
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {
-
-              },
-            ),
           ],
-        ),
+        )
       ),
     );
   }
-
 }

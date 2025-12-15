@@ -32,9 +32,9 @@ class CallWidget extends StatelessWidget {
         },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 2),
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade400, width: 3),
+            border: Border.all(color: Colors.grey.shade400, width: 2),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Row(
@@ -42,7 +42,7 @@ class CallWidget extends StatelessWidget {
               Stack(
                 children: [
                   CircleAvatar(
-                    radius: 35,
+                    radius: 30,
                     backgroundColor: (isFraud ?? false) ? Colors.red.shade100 : null,
                     child: Center(
                       child: (isFraud ?? false)
