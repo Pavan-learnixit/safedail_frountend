@@ -24,7 +24,7 @@ class CallScreenBottomBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -47,18 +47,18 @@ class CallScreenBottomBar extends StatelessWidget {
                       child: const Icon(Icons.dialpad,
                           size: 28, color: Colors.white),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Call action
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(20),
-                        backgroundColor: theme.colorScheme.primary,
-                      ),
-                      child:
-                          const Icon(Icons.call, size: 28, color: Colors.white),
-                    ),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     // Call action
+                    //   },
+                    //   style: ElevatedButton.styleFrom(
+                    //     shape: const CircleBorder(),
+                    //     padding: const EdgeInsets.all(20),
+                    //     backgroundColor: theme.colorScheme.primary,
+                    //   ),
+                    //   child:
+                    //       const Icon(Icons.call, size: 28, color: Colors.white),
+                    // ),
                   ],
                 ),
               ),

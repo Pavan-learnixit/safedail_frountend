@@ -149,7 +149,7 @@ class _CallsViewState extends State<CallsView> {
                         context,
                         MaterialPageRoute(
                             builder: (_) =>
-                            const PlaceholderPage(title: "Voice HD Page")),
+                            const PlaceholderPage(title: "My Stats Page")),
                       );
                     },
                   ),

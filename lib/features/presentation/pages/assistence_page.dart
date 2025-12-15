@@ -54,9 +54,55 @@ class _AssistantancePageState extends State<AssistantancePage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                buildSearchBar(controller: searchController, suffixOnPressed: () { Navigator.push(context, MaterialPageRoute(builder: (_)=>CallLogsPage()));}, prefixOnPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
-                }, onSubmitted: (value) {  },height: 60, context: context),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.person),
+                      color: Theme.of(context).colorScheme.primary,
+                      iconSize: 28,
+                      splashRadius: 24,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const ProfilePage()),
+                        );
+                      },
+                    ),
+                    Expanded(
+                      child: buildSearchBar(
+                        context: context,
+                        controller: searchController,
+                        suffixOnPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const CallLogsPage()),
+                          );
+                        },
+                        prefixOnPressed: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (_) => const ProfilePage()),
+                          // );
+                        },
+                        onSubmitted: (value) {},
+                        height: 60,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      color: Theme.of(context).colorScheme.primary,
+                      iconSize: 28,
+                      splashRadius: 24,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const CallLogsPage()),
+                        );
+                      },
+                    )
+
+                  ],
+                ),
           
                 ListTile(
                   title: Text('Assistant status'),
