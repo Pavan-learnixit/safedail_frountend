@@ -3,6 +3,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:truecaller_clone/sms_service.dart';
 import 'package:intl/intl.dart';
 
+import 'messagedetails_screen.dart';
+
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({super.key});
@@ -100,7 +102,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   ),
                 ],
               ),
-
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> MessageDetailScreen(sms: sms)),);
+              },
             ),
           );
         },

@@ -174,4 +174,12 @@ class ApiService {
     );
     return jsonDecode(response.body);
   }
+  Future<void> callEmptyPostApi() async {
+    final response = await http.post(Uri.parse("https://example.com/api/empty"));
+    if (response.statusCode == 200) {
+      print("Success: ${response.body}");
+    } else {
+      print("Error: ${response.statusCode}");
+    }
+  }
 }
